@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生成式 AI 作品集</title>
+  <meta name="description" content="一個程式零基礎的上班族，上生成式 AI 課程時，每堂課用 AI 完成的作品與過程紀錄。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-root="">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main>
+  <section class="home-hero">
+    <div class="wrap-wide">
+      <div class="eyebrow">寫給同事的 AI 實戰紀錄</div>
+      <h1>程式零基礎，<br>也能<em>和 AI 一起</em>做出這些</h1>
+      <p class="lead">我在化工業工作，沒有寫程式的背景。這學期上了一門生成式 AI 課程，每堂課都要交一份作品。這裡整理了每份作品是怎麼和 AI 一起完成的：踩過哪些坑、哪些方法真的有用，希望能給大家一點靈感，想想 AI 可以怎麼用在自己的工作上。</p>
+    </div>
+  </section>
+
+  <section class="wrap-wide" id="tools">
+    <h2 class="section-title">新手工具入門</h2>
+    <p class="section-sub">先認識作品裡用到的工具，每個都用幾分鐘就能看完的方式介紹。挑你有興趣的看就好。</p>
+    <div class="tool-strip" id="tool-strip"></div>
+  </section>
+
+  <section class="wrap-wide" id="works">
+    <h2 class="section-title">每堂課的作品</h2>
+    <p class="section-sub">點進去可以看完整過程、截圖，以及「帶回工作用」的小建議。想學某個用法，可以先用下面的標籤篩選：</p>
+    <div class="filter-bar" id="filter-bar"></div>
+    <p class="filter-count" id="filter-count"></p>
+    <div class="lesson-grid" id="lesson-grid"></div>
+  </section>
+
+  <section class="wrap-wide" id="about">
+    <h2 class="section-title">不知道從哪裡看起？</h2>
+    <p class="section-sub">依照你想知道的事挑一篇：</p>
+    <div class="guide">
+      <a href="lessons/lesson-05.html"><b>想看最完整的成果</b><span>第 5 堂：沒寫一行程式，做出一款 3D 工安教育遊戲</span></a>
+      <a href="lessons/lesson-04.html"><b>想學怎麼下指令</b><span>第 4 堂：讓 AI 反問、自己挑毛病，再用評分表比較三個 AI</span></a>
+      <a href="lessons/lesson-02.html"><b>想知道 AI 怎麼「學」</b><span>第 2 堂：親手訓練一個認得手寫數字的 AI</span></a>
+      <a href="lessons/lesson-03.html"><b>想用 AI 分析數據</b><span>第 3 堂：先想清楚要給 AI 看什麼、要它猜什麼</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap-wide">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+    <p>文中提到的法規、補助計畫與 AI 模型資訊，以作業當時的了解為準，實際使用前請再查證。</p>
+  </div>
+</footer>
+
+<script src="assets/js/lessons.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

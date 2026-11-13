@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Code｜新手工具入門</title>
+  <meta name="description" content="Claude Code 是會自己動手的 AI Agent，讓你用說的就能做出作品，也就是 Vibe Coding。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-tool="Claude Code">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / <a href="../index.html#tools">新手工具入門</a> / Claude Code</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">新手工具入門 · 讓 AI 做出作品</div>
+    <h1>Claude Code：用說的，讓 AI 做出作品</h1>
+    <div class="hero-badges"><span class="cost paid">需付費</span><span class="tag tool">約 4 分鐘讀完</span></div>
+    <p class="lead">Claude Code 是一種 <strong>AI Agent</strong>：你用自然語言描述需求，它會<strong>自己讀程式、改檔案、執行指令</strong>，把作品做出來。如果你完全不看程式碼、只憑結果和感覺跟 AI 來回調整，這種做法就叫 <strong>Vibe Coding</strong>。我看不懂程式碼，所以就用 Vibe Coding 的方式開發：第 5 堂的 3D 遊戲和這個網站都是這樣做出來的。</p>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/tools/claude-code-product.webp" alt="Claude Code 官方產品頁" loading="lazy">
+      <figcaption>Claude Code 官方產品頁（截自 Anthropic 官方網站）</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="agent">
+    <h2><span class="num">01</span>它和聊天助手差在哪？它會自己動手</h2>
+    <p>聊天助手像一位<strong>顧問</strong>：給你建議和程式，但複製、貼上、執行、除錯都是你自己來。Claude Code 像一位<strong>助理</strong>：你交代一句話，它自己想步驟、自己做完，再回來跟你報告。這種「會自己動手」的 AI，就叫做 <strong>AI Agent（AI 代理人）</strong>。</p>
+    <div class="callout"><b>課堂上（第 8 堂）的定義：AI Agent ＝ AI 模型 ＋ 做事的方法</b><br>就是教 AI 用「我們做事的方法」做事情。本來你要做的，AI 自動幫你做完。</div>
+    <p>例如你說「幫我做一個抽獎網頁」，Claude Code 會這樣做：</p>
+    <div class="flow">
+      <div><b>① 先規劃</b>想好要做哪些檔案、分幾個步驟</div>
+      <div class="arrow">→</div>
+      <div><b>② 使用工具</b>讀程式、改檔案、執行指令</div>
+      <div class="arrow">→</div>
+      <div><b>③ 自我檢查</b>自己打開來測試，發現錯誤就改</div>
+      <div class="arrow">→</div>
+      <div><b>④ 回報</b>完成了，請你看看結果</div>
+    </div>
+    <p>規劃（Planning）、使用工具（Tool Use）、自我檢查（Reflection），正好就是課堂上介紹的 AI Agent 做事方法。工作很大的時候，它還會把任務分給好幾個 AI 分頭進行，也就是「多代理合作」。</p>
+  </section>
+
+  <section class="block" id="vibe">
+    <h2><span class="num">02</span>看不懂程式碼也能開發：這就是 Vibe Coding</h2>
+    <p>因為讀程式、改檔案、執行都由 AI 動手，你可以<strong>完全不看程式碼</strong>，只憑結果和感覺跟 AI 來回調整：說出想要什麼、看結果、再說哪裡不對。2025 年 2 月，AI 專家 Andrej Karpathy 把這種做法取名為 <strong>Vibe Coding</strong>（課堂上開玩笑地譯成「隨興程式設計法」）。</p>
+    <p>Vibe Coding 是<strong>一種工作方式</strong>，不是工具本身：會看程式的工程師用 Claude Code 時，也可以一起檢查程式。但對<strong>看不懂程式碼的我們</strong>來說，Vibe Coding 正好讓我們也能開發自己的應用，只要做的東西適合：</p>
+    <div class="shots-2">
+      <div class="callout"><b>適合</b>
+        <ul>
+          <li>好玩的小專案</li>
+          <li>自己用、出錯也沒關係的小工具</li>
+          <li>先做出原型，拿去和工程師討論</li>
+        </ul>
+      </div>
+      <div class="callout warn"><b>不適合</b>
+        <ul>
+          <li>要正式上線給大家用的系統</li>
+          <li>沒人檢查就可能出亂子的程式</li>
+        </ul>
+      </div>
+    </div>
+    <p>課堂上教的成功秘訣：<strong>先和 AI 討論需求，再請 AI 整理成「規格書」</strong>，比做完再一直叫它改更容易成功。我在第 5 堂就是這樣做的。</p>
+  </section>
+
+  <section class="block" id="can-do">
+    <h2><span class="num">03</span>我用它做了什麼？</h2>
+    <ul>
+      <li><strong>完整的互動網頁或小遊戲</strong>：第 5 堂的 3D 工安遊戲有 9 類事件、11 個小遊戲，連手機版面和自動測試都是它做的。</li>
+      <li><strong>照規則持續擴充的網站</strong>：這個作品集網站，把規則寫在一份 CLAUDE.md 文件裡，每次新增一堂課，它就照同樣的格式做好新頁面。</li>
+      <li><strong>工作上也能做的小工具</strong>：例如抽獎程式、資料整理工具、簡單的查詢頁面。</li>
+    </ul>
+    <figure class="shot">
+      <img src="../assets/img/lesson-05/cover.webp" alt="化工人的一天 3D 工安教育遊戲封面" loading="lazy">
+      <figcaption>用 Claude Code 做出的第 5 堂作品：化工人的一天</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="start">
+    <h2><span class="num">04</span>怎麼開始？</h2>
+    <p>需要 <strong>Claude 的付費訂閱</strong>。可以在電腦的終端機、VS Code、桌面應用程式或網頁上使用，官方有繁體中文的說明文件。</p>
+    <figure class="shot">
+      <img src="../assets/img/tools/claude-code-docs.webp" alt="Claude Code 繁體中文官方文件" loading="lazy">
+      <figcaption>Claude Code 官方說明文件（繁體中文版，截自 Anthropic 官方網站）</figcaption>
+    </figure>
+    <div class="links">
+      <a class="btn ghost" href="https://docs.claude.com/zh-TW/docs/claude-code/overview" target="_blank" rel="noopener">官方說明文件 ↗</a>
+    </div>
+    <div class="callout"><b>還不想付費？</b> 簡單的網頁，可以先請 <a href="chat-assistant.html">AI 聊天助手</a>「做成單一的 index.html 檔」，存檔後用瀏覽器打開，再用 <a href="github-pages.html">GitHub Pages</a> 放上網路，一樣能完成。</div>
+  </section>
+
+  <section class="block" id="examples">
+    <h2><span class="num">05</span>作品集裡的實例</h2>
+    <div class="tool-examples" id="tool-examples"></div>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>AI Agent 與 Vibe Coding 的說明整理自生成式 AI 課程第 8 堂講義。官方網站畫面擷取自公開網頁（2026/11），版權屬 Anthropic。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

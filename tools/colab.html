@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Colab｜新手工具入門</title>
+  <meta name="description" content="不用學寫程式：AI 幫你寫好的 Python 程式，貼到 Google Colab 按一下就能跑出結果。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-tool="Google Colab">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / <a href="../index.html#tools">新手工具入門</a> / Google Colab</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">新手工具入門 · 執行 AI 寫的程式</div>
+    <h1>Google Colab</h1>
+    <div class="hero-badges"><span class="cost">免費</span><span class="tag tool">約 3 分鐘讀完</span></div>
+    <p class="lead">Google 提供的免費「線上筆記本」。重點<strong>不是學寫程式</strong>，而是：AI 幫你寫好的 Python 程式，貼到這裡按一下，就能跑出結果。</p>
+    <div class="links hero-links">
+      <a class="btn" href="https://colab.research.google.com/" target="_blank" rel="noopener">打開 Google Colab ↗</a>
+    </div>
+  </section>
+
+  <section class="block" id="what">
+    <h2><span class="num">01</span>為什麼需要它？</h2>
+    <p>請 AI 聊天助手「幫我把這些數字畫成圖」，它常常會給你一段 <strong>Python 程式</strong>。程式要「執行」才會變成圖表或結果，但平常要在電腦上安裝一堆東西才跑得動。</p>
+    <p>Colab 讓你<strong>直接在瀏覽器裡執行</strong>，什麼都不用裝，有 Google 帳號就能用。</p>
+    <figure class="shot">
+      <img src="../assets/img/tools/colab-home.webp" alt="Google Colab 首頁，左上角有新增筆記本按鈕" loading="lazy">
+      <figcaption>Colab 首頁：按左上角藍色的「新增筆記本」就能開始（截自 Google Colab 官方網站）</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="how">
+    <h2><span class="num">02</span>怎麼用？四個步驟</h2>
+    <ol class="steps">
+      <li class="step">
+        <h3>打開 Colab，按「新增筆記本」</h3>
+        <p>用 Google 帳號登入後，就會出現一個空白的筆記本。</p>
+      </li>
+      <li class="step">
+        <h3>請 AI 聊天助手寫程式</h3>
+        <div class="prompt">我有一份每月產量的資料，請給我可以直接貼到 Google Colab 執行的 Python 程式，畫成折線圖。</div>
+        <p>記得加上「<strong>可以直接在 Google Colab 執行</strong>」，AI 就會給你完整、能直接用的版本。</p>
+      </li>
+      <li class="step">
+        <h3>貼到程式格，按左邊的 ▶</h3>
+        <p>結果會直接出現在程式下方。下面是我第 1 堂作業的畫面：上面是 AI 協助寫的程式，下面是跑出來的圖。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-01/step2-sine.webp" alt="Colab 中的程式和畫出來的波形圖" loading="lazy"><figcaption>程式在上、結果在下（我的第 1 堂作業）</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>出現紅色錯誤？整段貼回給 AI</h3>
+        <p>把錯誤訊息整段複製，貼回給 AI 說「執行後出現這個錯誤」，它通常就會改好。不需要看懂錯誤在說什麼。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="notice">
+    <h2><span class="num">03</span>用的時候注意三件事</h2>
+    <ul>
+      <li>可以從左邊的資料夾圖示上傳 Excel、CSV 檔讓程式讀取，但檔案會放到 Google 的雲端，<strong>公司資料要注意</strong>。</li>
+      <li>筆記本閒置一段時間後，上傳的檔案會被清掉，需要時再上傳一次就好。</li>
+      <li>筆記本可以按右上角「共用」分享連結，別人打開就能看到程式和結果。</li>
+    </ul>
+  </section>
+
+  <section class="block" id="examples">
+    <h2><span class="num">04</span>作品集裡的實例</h2>
+    <div class="tool-examples" id="tool-examples"></div>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>官方網站畫面擷取自 Google Colab 公開網頁（2026/11），版權屬原公司。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

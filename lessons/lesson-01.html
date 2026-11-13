@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 1 堂｜用 AI 畫出一顆可麗露</title>
+  <meta name="description" content="沒有靈感也不熟程式，請 AI 給點子，再一步步拆解公式，畫出一個像可麗露的 3D 函數圖形。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="1">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 1 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 1 堂 · 09/08 · 課程介紹：如何不焦慮地學 AI</div>
+    <h1>用 AI 畫出一顆「可麗露」</h1>
+    <p class="lead">第一份作業是「在 Colab 畫一個函數圖形」。我沒有靈感，也不太會寫程式，所以先請 AI 幫我想點子，再把它給的程式一步一步拆開，直到真的看懂為止。</p>
+    <div class="meta" id="lesson-meta"></div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-01/final-3views.webp" alt="可麗露函數的側面圖、俯視圖與 3D 圖">
+      <figcaption>最後的成果：側面圖、俯視圖，以及合起來的 3D 圖</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>作業要畫一個「有創意」的函數圖形，但我完全沒靈感，也看不懂太複雜的程式。</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>先請 AI 產生很多種圖形給我挑；選定之後，再請它幫我把公式和程式拆成小步驟。</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>選了 z = sin(√(x² + y²))，看懂「把一條波浪繞一圈」的原理，畫出可麗露形狀的 3D 圖。</p></div>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">01</span>過程</h2>
+    <ol class="steps">
+      <li class="step">
+        <h3>請 AI 給點子，挑一個自己喜歡的</h3>
+        <p>老師說可以用生成式 AI 協助，所以我請 AI 產生很多不同的函數圖形：螺旋狀、小花狀、愛心狀，還有看起來很複雜的圖。</p>
+        <p>看了很多張之後，我發現 <strong>z = sin(√(x² + y²))</strong> 畫出來很像我喜歡的法式甜點「可麗露」，就決定選它。</p>
+      </li>
+      <li class="step">
+        <h3>AI 給的程式看不懂，那就拆開來</h3>
+        <p>AI 給的程式又長又雜，我幾乎看不懂。為了寫出作業過程，我把公式拆成兩個步驟：</p>
+        <ol>
+          <li><strong>俯視圖</strong>：先算出平面上每一點到中心的距離 ρ = √(x² + y²)</li>
+          <li><strong>側面圖</strong>：再用這個距離算出高度 z = sin(ρ)</li>
+        </ol>
+      </li>
+      <li class="step">
+        <h3>先畫一個圓，搞懂「距離」</h3>
+        <p>我先試著只畫 ρ = 2：從中心出發、距離永遠是 2，一邊轉方向一邊點出來，連起來就是一個圓。畫很多個不同大小的圓疊在一起，就是最後圖形的「俯視圖」。</p>
+        <div class="shots-2">
+          <figure class="shot"><img src="../assets/img/lesson-01/step1-circle.webp" alt="半徑為 2 的圓" loading="lazy"><figcaption>先畫距離中心都是 2 的點</figcaption></figure>
+          <figure class="shot"><img src="../assets/img/lesson-01/step1-rings.webp" alt="很多層同心圓" loading="lazy"><figcaption>一層一層畫出來，就是俯視圖</figcaption></figure>
+        </div>
+      </li>
+      <li class="step">
+        <h3>把距離丟進 sin，得到一條波浪</h3>
+        <p>z = sin(ρ) 就是普通的正弦波，只是橫軸換成「離中心的距離」。可麗露不需要那麼長的波，所以我只取 0.25π 到 1.25π 這一小段，剛好是一個隆起再往下的形狀。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-01/step2-sine-long.webp" alt="完整的正弦波" loading="lazy"><figcaption>完整的正弦波，每隔 2π 重複一次</figcaption></figure>
+        <figure class="shot narrow"><img src="../assets/img/lesson-01/step2-sine.webp" alt="只取 0.25π 到 1.25π 的正弦波程式與結果" loading="lazy"><figcaption>只留下一小段，這就是可麗露的「側面圖」</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>恍然大悟：把側面繞一圈就是可麗露</h3>
+        <p>一直到側面圖畫出來，我才恍然大悟：<strong>把這條波浪繞著中心轉一圈，就是可麗露！</strong>最後把兩個步驟合起來，畫出 3D 圖形。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">02</span>成果</h2>
+    <p>作業用 Google Colab 完成，裡面有每一步的程式、圖和文字說明：</p>
+    <div class="links">
+      <a class="btn" href="https://colab.research.google.com/drive/1iAS19yrNtoaN-1tjXxobfuU1VmIHuz_y" target="_blank" rel="noopener">打開 Colab 作業 ↗</a>
+    </div>
+    <div class="callout"><b>什麼是 Colab？</b> Google 提供的免費線上筆記本，打開瀏覽器就能寫 Python、畫圖，不用在自己電腦安裝任何東西，可以同時放文字說明、程式和圖。</div>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">03</span>我的心得</h2>
+    <div class="reflection">
+      <p>這次作業讓我發現，AI 的確可以很快給我很多靈感和現成的程式碼，但如果完全不研究，我其實不會知道自己交出去的是什麼。</p>
+      <p>我本來以為只要從很多圖片中挑一張喜歡的，大概理解一下就好；結果 AI 給的東西又長又雜，我幾乎看不懂。後來為了寫出作業過程，只好一步一步了解公式、拆分步驟，直到畫出側面圖才終於懂了。</p>
+      <p>雖然我現在還沒辦法不看 AI 範例就自己寫出整段程式，但至少知道：在 AI 的協助下，我可以清楚理解每一段在做什麼，也能照自己的思路重新組合程式。</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>沒靈感時，請 AI 一次給很多選項</b>例如簡報主題、標語、報告架構，先請 AI 列出 10 個，自己挑最有感覺的，比從零開始想快很多。</li>
+      <li><b>交出去之前，自己要先看得懂</b>AI 給的報告、公式或程式，如果被問到「這是什麼意思」答不出來，就還不能用。</li>
+      <li><b>看不懂就請 AI 拆成小步驟</b>不用硬吞一大段，請 AI 一步一步解釋，每一步都做出來確認，就會越來越清楚。</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

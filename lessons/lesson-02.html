@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 2 堂｜訓練手寫數字辨識 AI</title>
+  <meta name="description" content="從老師的範例出發，自己改設定做實驗、請 AI 解釋原因，手寫數字辨識正確率從 93.51% 提升到 98.31%。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="2">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 2 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 2 堂 · 09/15 · 神經網路的概念</div>
+    <h1>訓練一個認得手寫數字的 AI</h1>
+    <p class="lead">這堂課第一次親手「訓練」AI：讓它看 6 萬張手寫數字圖片，學會分辨 0 到 9。我從老師的範例開始，一次改一個設定、看分數怎麼變，每次遇到不懂的地方就請 AI 解釋。</p>
+    <div class="meta" id="lesson-meta"></div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-02/gradio-7-1.webp" alt="在畫板上手寫 7 和 1，AI 顯示辨識結果與機率">
+      <figcaption>最後用自己手寫的數字測試：不常見的 7 寫法認得 100%，1 的寫法有 80% 認為是 1</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>老師範例的正確率是 93.51%。我想知道改哪些設定會更好，而且要弄懂「為什麼」。</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>每次實驗結果出來，就請 ChatGPT 解釋原因；模型突然壞掉時，也是靠它找出問題。</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>正確率從 <strong>93.51%</strong> 提升到 <strong>98.31%</strong>，還做了一個可以手寫測試的小網頁。</p></div>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">01</span>過程</h2>
+
+    <div class="callout"><b>名詞小抄</b>
+      <ul>
+        <li><strong>loss function（損失函數）</strong>：AI 用來計算「自己猜錯多少」的方法</li>
+        <li><strong>optimizer（優化器）</strong>：AI 根據錯誤調整自己的方式</li>
+        <li><strong>learning rate（學習率）</strong>：每次調整的步伐有多大</li>
+        <li><strong>epoch</strong>：把全部訓練資料看過一輪</li>
+      </ul>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <h3>先跟著課堂做一次，把每一步弄懂</h3>
+        <p>用的是經典的 MNIST 資料：6 萬張 28×28 像素的手寫數字給 AI 學習，另外 1 萬張留著「考試」。考試的分數才代表 AI 的真實實力，後面所有比較都用這個分數。老師範例的分數是 <strong>93.51%</strong>。</p>
+      </li>
+      <li class="step">
+        <h3>換一個比較合理的評分方式</h3>
+        <p>老師提示：分類問題其實更適合用 <code>categorical_crossentropy</code>，「可以問問 AI 為什麼」。問完之後，我的理解是：這種方法專門看 AI 有沒有把正確答案的機率給得夠高，而且「很有自信卻猜錯」時會罰得很重；原本的 <code>mse</code> 只是比較數字差多少，對「10 選 1」的分類問題不夠敏感。</p>
+        <p>結果正確率提升到 <strong>95.89%</strong>，架構都沒改，就多了 2% 以上。</p>
+      </li>
+      <li class="step">
+        <h3>換成熱門的 Adam，結果整個壞掉</h3>
+        <p>老師建議也可以試試流行的 Adam 優化器。我沿用原本的設定直接換，正確率竟然掉到 <strong>21.01%</strong>，幾乎辨識不出來。</p>
+        <p>問了 ChatGPT 才知道：原本的學習率 0.087 對 Adam 來說太大了，等於每一步都跨太大、一直跳過正確答案。改成 0.001 之後恢復正常，達到 <strong>95.83%</strong>。</p>
+        <div class="callout warn"><b>這裡學到的事</b> 我是先用相同參數實際跑過、看到問題才去問 AI，而不是一開始就問「Adam 要怎麼調才最好」。所以這次真的從錯誤中學到原因，而不是只拿到一個答案。</div>
+      </li>
+      <li class="step">
+        <h3>「越深越好」嗎？實驗兩種架構</h3>
+        <p>老師上課提到「越深的模型，可能效果越好」，我試了兩種：</p>
+        <ul>
+          <li>每層 20 個神經元、疊 10 層：<strong>95.39%</strong>，沒有變好</li>
+          <li>神經元從 512 → 256 → 128 → 64 逐漸變少：<strong>97.87%</strong>，大幅提升</li>
+        </ul>
+        <p>問了 AI 之後我的理解是：一張圖有 784 個點，如果一開始就壓縮到只剩 20 個，很多資訊就消失了，疊再深也沒用；逐漸縮小，才能一層層濃縮出重要的資訊。</p>
+      </li>
+      <li class="step">
+        <h3>多訓練幾次會更好嗎？</h3>
+        <p>我讓模型訓練 30 輪，並拿 10% 的資料當「小考」。把成績畫出來發現：練習題的分數一直上升，但小考成績大概在第 10 輪之後就停在 98% 左右了。</p>
+        <p>所以我加了「提早停止」：小考成績連續 3 輪沒進步就停下來，並回到成績最好的那一版。最後得到 <strong>98.31%</strong>，是所有實驗中最好的結果。</p>
+        <div class="shots-2">
+          <figure class="shot"><img src="../assets/img/lesson-02/accuracy-30epochs.webp" alt="訓練 30 輪的正確率曲線" loading="lazy"><figcaption>訓練 30 輪：train（練習）一直上升，val（小考）很早就持平</figcaption></figure>
+          <figure class="shot"><img src="../assets/img/lesson-02/accuracy-earlystop.webp" alt="加入提早停止後的正確率曲線" loading="lazy"><figcaption>加入提早停止：沒進步就停，不浪費時間</figcaption></figure>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">02</span>成果</h2>
+    <h3>所有實驗一覽</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>實驗</th><th>改了什麼</th><th>正確率</th><th>變化</th></tr></thead>
+        <tbody>
+          <tr><td>老師範例</td><td>起點</td><td class="num">93.51%</td><td>—</td></tr>
+          <tr><td>換評分方式</td><td>mse → categorical_crossentropy</td><td class="num">95.89%</td><td><span class="up">+2.38%</span></td></tr>
+          <tr><td>換 Adam</td><td>學習率沿用 0.087</td><td class="num">21.01%</td><td><span class="down">壞掉了</span></td></tr>
+          <tr><td>Adam 調學習率</td><td>學習率改成 0.001</td><td class="num">95.83%</td><td>和原本差不多</td></tr>
+          <tr><td>加深到 10 層</td><td>每層 20 個 × 10 層</td><td class="num">95.39%</td><td><span class="down">−0.44%</span></td></tr>
+          <tr><td>逐漸縮小的架構</td><td>512 → 256 → 128 → 64</td><td class="num">97.87%</td><td><span class="up">+2.04%</span></td></tr>
+          <tr><td>多訓練</td><td>30 輪</td><td class="num">98.04%</td><td><span class="up">+0.17%</span></td></tr>
+          <tr class="best"><td>提早停止</td><td>沒進步就停，回到最佳版本</td><td class="num">98.31%</td><td><span class="up">+0.27%，最佳</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>用自己的手寫數字測試</h3>
+    <p>最後用 Gradio 做了一個小畫板，可以直接手寫數字給 AI 認。基本的 3 和 5 都是 100%；我還故意寫了一些奇怪的寫法：</p>
+    <div class="shots-2">
+      <figure class="shot"><img src="../assets/img/lesson-02/gradio-3-5.webp" alt="手寫 3 和 5 都辨識為 100%" loading="lazy"><figcaption>基本款的 3 和 5：100%</figcaption></figure>
+      <figure class="shot"><img src="../assets/img/lesson-02/gradio-9-4.webp" alt="不常見的 9 寫法與容易混淆的 4" loading="lazy"><figcaption>不常見的 9：88%（小機率猜成 0）；容易和 9 混淆的 4：100%</figcaption></figure>
+    </div>
+    <div class="links">
+      <a class="btn" href="https://colab.research.google.com/drive/1YBQ32im_tK0JDHLfBHhmG5iB1C1ZukDI" target="_blank" rel="noopener">打開 Colab 作業 ↗</a>
+    </div>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">03</span>我的心得</h2>
+    <div class="reflection">
+      <p>這次作業比較像是一邊實作、一邊學習。以前看到 loss、optimizer 這些名詞，通常只是直接套用網路上常見的做法。這次從老師的範例開始一點一點修改、測試，在 AI 的協助下理解「為什麼要這樣改」，再用實際分數驗證，體會深刻很多。</p>
+      <p>換成 Adam 時模型直接學不起來，透過 AI 才知道是學習率太大，當下真的覺得 AI 用來找問題非常厲害！</p>
+      <p>AI 的確幫我省下大量查資料的時間，但要嘗試什麼方法、實驗結果合不合理、它說的是不是真的，最後還是要自己判斷。</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>先自己試，看到問題再問 AI</b>直接問「最好的做法是什麼」只會拿到一個答案；先試過、帶著具體的現象去問，才會真的懂原因，也比較能判斷 AI 說得對不對。</li>
+      <li><b>一次只改一個地方，用同一把尺比較</b>跟製程改善的實驗一樣：每次只動一個變因、用同一組測試資料評分，才知道是哪個改變有效。</li>
+      <li><b>把 AI 當成找問題的夥伴</b>結果怪怪的時候，把「改了什麼、看到什麼」完整告訴 AI，它通常能很快指出可能的原因。</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

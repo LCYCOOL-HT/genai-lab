@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 聊天助手｜新手工具入門</title>
+  <meta name="description" content="常見的 AI 聊天助手有哪些？它怎麼回答、為什麼記得前面的話、為什麼知道今天天氣？用國中生也看得懂的方式說明。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-tool="AI 聊天助手">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / <a href="../index.html#tools">新手工具入門</a> / AI 聊天助手</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">新手工具入門 · 問問題、寫東西</div>
+    <h1>AI 聊天助手</h1>
+    <div class="hero-badges"><span class="cost">免費</span><span class="tag tool">約 5 分鐘讀完</span></div>
+    <p class="lead">ChatGPT、Gemini、Claude 這些 AI 聊天助手，像傳訊息一樣打字就能用。它們的核心其實<strong>只會做一件事：猜下一個字</strong>。會記得前面的話、會知道今天的天氣，都是在這件事上加的巧思；也因為它只是在「接話」，用的時候要記得自己把關。</p>
+  </section>
+
+  <section class="block" id="list">
+    <h2><span class="num">01</span>常見的有這幾個，用法都一樣</h2>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>名稱</th><th>公司</th><th>網址</th></tr></thead>
+        <tbody>
+          <tr><td>ChatGPT</td><td>OpenAI</td><td><a href="https://chatgpt.com/" target="_blank" rel="noopener">chatgpt.com</a></td></tr>
+          <tr><td>Gemini</td><td>Google</td><td><a href="https://gemini.google.com/" target="_blank" rel="noopener">gemini.google.com</a></td></tr>
+          <tr><td>Claude</td><td>Anthropic</td><td><a href="https://claude.ai/" target="_blank" rel="noopener">claude.ai</a></td></tr>
+          <tr><td>Grok</td><td>xAI</td><td><a href="https://grok.com/" target="_blank" rel="noopener">grok.com</a></td></tr>
+          <tr><td>Meta AI</td><td>Meta</td><td><a href="https://www.meta.ai/" target="_blank" rel="noopener">meta.ai</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>它們都有<strong>免費版</strong>，用 Google 帳號或 Email 就能註冊；付費版可以用更強的版本、用得更多。用法幾乎一樣：<strong>打字 → 送出 → 看回答 → 繼續追問</strong>。挑一個順手的就好。</p>
+    <figure class="shot">
+      <img src="../assets/img/tools/chat-gemini.webp" alt="Gemini 的網頁畫面，中間有一個輸入框" loading="lazy">
+      <figcaption>Gemini 的畫面：中間的輸入框打字就能開始（截自 Gemini 官方網站）</figcaption>
+    </figure>
+  </section>
+
+  <section class="block" id="how">
+    <h2><span class="num">02</span>它的核心只做一件事：猜下一個字</h2>
+    <p>這類 AI 的本體叫做 <strong>LLM（大型語言模型）</strong>。它讀過超大量的文字：課堂上提到，有些模型讀過的字量，大約是一個人一輩子讀的字的 <strong>1.5 萬倍</strong>。</p>
+    <p>但它每次其實只做一件事：<strong>看前面所有的字，猜下一個字最可能是什麼</strong>，然後一個字一個字接下去，就變成一整段回答。</p>
+    <div class="bars">
+      <div class="q">「今天天氣很 ___」，下一個字是？</div>
+      <div class="bar"><span>好</span><i style="width:45%"></i><span>45%</span></div>
+      <div class="bar"><span>熱</span><i style="width:30%"></i><span>30%</span></div>
+      <div class="bar low"><span>冷</span><i style="width:15%"></i><span>15%</span></div>
+      <div class="bar low"><span>悶</span><i style="width:8%"></i><span>8%</span></div>
+      <p class="note">示意圖：AI 會替每個可能的字打分數，再依機率挑一個。</p>
+    </div>
+    <p>因為是「依機率挑」，所以<strong>同一個問題，每次的回答都會有點不一樣</strong>（這就是第 3 堂課的主題：AI 為什麼每次都不一樣）。</p>
+    <div class="callout warn"><b>所以要小心</b> 它的目標是「接得很順」，不是「說得正確」。老師形容它是很會接話的「唬爛王」：可能一本正經地說錯，這叫做<strong>幻覺</strong>。重要的內容一定要自己讀過、查證過。</div>
+  </section>
+
+  <section class="block" id="memory">
+    <h2><span class="num">03</span>只會猜字，為什麼記得前面說過的話？</h2>
+    <p>其實 AI 本身不會「記住」你。秘密是：<strong>每次你按下送出，App 會把整段對話紀錄，連同新問題一起交給 AI 重新讀一遍。</strong></p>
+    <div class="chat-demo">
+      <div class="sys">你按下送出時，AI 收到的其實是這一整串 ↓</div>
+      <div class="msg user">幫我寫一封請假信，週五要請一天假</div>
+      <div class="msg ai">好的，以下是請假信……</div>
+      <div class="msg user">語氣再客氣一點</div>
+    </div>
+    <p>所以它知道「語氣再客氣一點」指的是那封請假信。AI 讀的時候還有一個<strong>注意力機制</strong>（第 5 堂課的內容），會特別注意前面和現在問題有關的字，就像我們讀文章時會回頭找重點。</p>
+    <div class="callout"><b>實用小技巧</b> 開「新對話」就等於一張白紙，它不會記得之前聊過什麼。換一個主題時，開新對話效果比較好。</div>
+  </section>
+
+  <section class="block" id="weather">
+    <h2><span class="num">04</span>只讀過舊資料，為什麼知道今天的天氣？</h2>
+    <p>AI 讀的資料停在它被訓練完成的那一天，所以它本身<strong>不知道今天發生什麼事</strong>。它能回答天氣，是因為會<strong>使用工具</strong>（第 8 堂課的內容）：</p>
+    <div class="flow">
+      <div><b>① 你問</b>台北今天會下雨嗎？</div>
+      <div class="arrow">→</div>
+      <div><b>② AI 判斷</b>這要查最新資料，我來呼叫「上網搜尋」工具</div>
+      <div class="arrow">→</div>
+      <div><b>③ 工具回傳</b>今天降雨機率 70%</div>
+      <div class="arrow">→</div>
+      <div><b>④ AI 回答</b>根據查到的資料：很可能會下雨，記得帶傘</div>
+    </div>
+    <p>計算機、上網搜尋、查資料庫都是工具。AI 不擅長的事，就交給工具做，它負責判斷什麼時候該用、再把結果講成人話。有上網查的回答，下面通常會附上來源，可以點進去確認。</p>
+  </section>
+
+  <section class="block" id="notice">
+    <h2><span class="num">05</span>所以用的時候，要記得兩件事</h2>
+    <ol>
+      <li><strong>不要貼個資和公司機密。</strong>它要「整段對話重讀」才記得住，代表對話會存在雲端，即使 AI 不拿來學習，也可能因帳號被盜等原因外洩（第 6 堂課的提醒）。</li>
+      <li><strong>AI 寫的東西，一定要自己讀過一次。</strong>它的目標是接得順、不是說得對，可能一本正經地說錯；就算沒寫錯，也不一定寫對了你的意思，要用自己的專業判斷。</li>
+    </ol>
+  </section>
+
+  <section class="block" id="examples">
+    <h2><span class="num">06</span>作品集裡的實例</h2>
+    <div class="tool-examples" id="tool-examples"></div>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>原理說明整理自生成式 AI 課程講義（第 3、4、5、6、8 堂）。官方網站畫面擷取自公開網頁（2026/11），版權屬原公司。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

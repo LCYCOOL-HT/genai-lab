@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 8 堂｜股市資訊助手</title>
+  <meta name="description" content="AI 不知道今天的股價，所以我給它兩個查證交所資料的工具，讓它自己決定查什麼、查幾輪，一句話就能查股價、比較兩檔股票。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="8">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 8 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 8 堂 · 10/27 · 教 AI 做事的方法</div>
+    <h1>股市資訊助手：讓 AI 自己用工具查股價</h1>
+    <p class="lead">我想做一個用一句話就能問股票資訊的助手，例如「2330 最新收盤多少？」「長榮的海運和航空，今天哪個漲比較多？」。AI 本身不知道今天的股價，所以我給它兩個查證交所資料的<strong>工具</strong>，讓它自己判斷要用哪個、要查幾輪。這種做法叫 <strong>Tool Use</strong>。</p>
+    <div class="meta" id="lesson-meta"></div>
+    <div class="links hero-links">
+      <a class="btn" href="https://colab.research.google.com/drive/1OBKbyy06WbQUWtN6GxBDmCo353eG2Cdn" target="_blank" rel="noopener">打開 Colab 筆記本 ↗</a>
+    </div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-08/gradio-answer.webp" alt="股市資訊助手的網頁介面：輸入「長榮的海運和航空，今天哪個漲比較多？」，下方顯示執行狀態、結論和兩檔股票的數據">
+      <figcaption>完成的網頁介面：問「長榮的海運和航空，今天哪個漲比較多？」，AI 自己查了 3 輪工具，再整理出結論和數據</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>直接問 AI「2330 最新收盤多少？」，它只會說「無法提供即時的股價資訊」，因為它手上沒有今天的資料。</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>AI 負責判斷「要查什麼」，由程式去證交所查資料，再交回給 AI 用白話回答。查資料和多輪判斷的程式也是請 AI 協助寫的，我在旁邊寫下自己的理解。</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>只給公司名稱，AI 也會自己先查代號、再查股價；比較兩家公司時 2～3 輪就查完，資料夠了就自己停下來（安全上限 5 輪）。</p></div>
+  </section>
+
+  <section class="block" id="concept">
+    <h2><span class="num">01</span>先搞懂 Tool Use：AI 不會的事，交給工具去做<span class="badge-supp" title="依使用者要求補充">補充</span></h2>
+    <p>這堂課的主角是 <strong>Tool Use</strong>（工具使用）。它和第 7 堂的 RAG 一樣，是一種「做法」而不是一個 App，所以不在新手工具入門裡；但你平常用的聊天 AI 能查天氣、上網搜尋，靠的就是它。</p>
+
+    <h3>因為 LLM 有做不好的事，所以不要再逼它</h3>
+    <p>第 8 堂講義列出三件 LLM 不太會做的事：<strong>精確計算、實際數據、網路搜尋</strong>。LLM 的知識停在訓練完成的那一天，問它「今天台積電收盤多少」，它只能說不知道，或更糟，編一個數字給你。老師的說法是：LLM 不太會做的事，就不要再逼它了，<strong>呼叫工具來幫忙</strong>。</p>
+
+    <h3>AI 自己不會按按鈕，它只負責「決定」和「解讀」</h3>
+    <p>講義用飲料店點餐當例子：顧客說「我想訂 20 杯麥茶」，AI 不會自己算錢，而是先決定呼叫報價工具、帶入「麥茶、20 杯」，程式算出結果後，AI 再根據結果回答「20 杯麥茶一共 600 元」。也就是說，<strong>LLM 參與兩個階段</strong>，中間真正動手的是程式：</p>
+    <div class="flow">
+      <div><b>① 先告訴 AI 有哪些工具</b>我給了兩個：用公司名稱查代號（search_stock）、用代號查股價（get_quote）</div>
+      <div class="arrow">→</div>
+      <div><b>② AI 決定用哪個工具</b>用電腦好讀的 JSON 格式寫出「要用 get_quote，代號 2330」</div>
+      <div class="arrow">→</div>
+      <div><b>③ 程式真的去執行</b>向證交所查資料，把結果交回給 AI</div>
+      <div class="arrow">→</div>
+      <div><b>④ AI 根據結果回答</b>用白話說出收盤價，並註明資料日期</div>
+    </div>
+
+    <h3>能自己判斷「要查什麼、查幾次」，就是 AI Agent 的雛形</h3>
+    <p>講義把 Tool Use 列為 AI Agent（會自己決定下一步、把事情做完的 AI）的四個設計模式之一。如果 AI 不只用一次工具，而是查完代號、發現還要查股價，就<strong>自己再查一輪</strong>，它就開始像一個會自己做事的助手。我的 V2 就是往這個方向改的，過程寫在下面。</p>
+
+    <h3>一般人不用自己寫工具，但已經在很多 AI 工具裡用到它</h3>
+    <p>講義也提到，工具不一定要自己寫，很多平台已經可以讓 AI 連上工具，例如上網搜尋、讀 email，甚至處理電腦桌面的檔案。聊天 AI 的「搜尋網路」功能，以及會自己讀檔、改檔的 <a href="../tools/claude-code.html">Claude Code</a>，背後都是 Tool Use。知道原理之後，看到 AI 回答時就可以留意：<strong>這個答案是它查來的，還是它記得的？</strong>查來的才有日期和來源可以核對。</p>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">02</span>過程</h2>
+
+    <div class="callout"><b>名詞小抄</b>
+      <ul>
+        <li><strong>LLM（大型語言模型）</strong>：ChatGPT 這類 AI 背後的「大腦」，它的知識停在訓練資料的時間點。</li>
+        <li><strong>Tool Use（工具使用）</strong>：AI 自己不會查資料、不會執行程式，但可以「判斷該用哪個工具、要給什麼資料」，再由程式真的去執行，把結果交回給 AI。</li>
+        <li><strong>API</strong>：讓程式直接跟另一個系統拿資料的窗口，像餐廳的外帶窗口：把點單遞進去，就拿到餐點，不用進店裡。</li>
+        <li><strong>證交所公開 API</strong>：臺灣證券交易所提供的公開資料窗口，可以查上市股票的每日成交資料，不需要金鑰。</li>
+        <li><strong>JSON</strong>：一種電腦容易讀的固定格式，像欄位都填好的表單，例如 <code>{"tool": "get_quote", "arguments": {"code": "2330"}}</code>。</li>
+        <li><strong>Gradio</strong>：把程式變成簡單網頁介面的套件，有輸入框、按鈕就能操作。</li>
+      </ul>
+    </div>
+
+    <p>這次是以老師的 Tool Use 範例為基礎改編。Colab 筆記本裡，標 🤖 的程式格是請 AI 協助撰寫的，我會在旁邊寫下「我的理解」；整份筆記本也是請 AI 幫忙整理排版。負責判斷的 AI 模型，是透過 Groq 平台使用的 gpt-oss-120b。</p>
+
+    <h3>第一階段：先確認是不是真的需要工具</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>不給工具，直接問 AI「2330 最新收盤多少？」</h3>
+        <p>開始做工具之前，我先確認 AI 自己能不能回答。結果它很誠實地說「無法提供即時的股價資訊」，沒有亂編數字，但使用者也得不到答案。</p>
+        <p>就像老師上課說的，模型的知識停在訓練資料的時間點，而股價每天都在變，AI 手上沒有資料，所以才需要 Tool Use。</p>
+        <figure class="shot"><img src="../assets/img/lesson-08/no-tool-llm.webp" alt="不給任何工具時，AI 回答無法提供即時的股價資訊" loading="lazy"><figcaption>不給工具時，AI 回答「無法提供即時的股價資訊」</figcaption></figure>
+      </li>
+    </ol>
+
+    <h3>第二階段：V1，一個工具、問一次</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>找資料來源：用證交所的兩個公開 API 做成工具</h3>
+        <p>我用了兩個證交所的公開 API，都不需要金鑰：一個是<strong>全部 1,390 家上市公司</strong>最新一天的資料，我拿來當「公司名單」（代號對應公司名稱）；另一個是<strong>一檔股票整個月的每日成交資料</strong>，用來查收盤價。這兩個 API 包成了 AI 可以用的兩個工具：</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>工具</th><th>給它什麼</th><th>它會做什麼</th><th>哪一版加入</th></tr></thead>
+            <tbody>
+              <tr><td>get_quote</td><td>股票代號</td><td>查最新一天的收盤價、漲跌、開高低、成交量</td><td>V1</td></tr>
+              <tr><td>search_stock</td><td>公司名稱（或其中幾個字）</td><td>查出符合的公司和股票代號</td><td>V2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>另外還有沿用老師範例的 <code>clarify</code>：問題缺少必要資訊時（例如沒說是哪一檔股票），AI 會反問使用者。它不是工具，不會執行程式。</p>
+        <p>工具也會擋掉錯誤的輸入：給 get_quote 公司名稱「台積電」或不存在的代號「9999」，它會直接回傳錯誤，不會亂猜一個。</p>
+        <div class="callout warn"><b>小細節</b> Colab 的時間是國外時間，不設定成台灣時間的話，早上執行可能會抓到前一天的資料。</div>
+      </li>
+      <li class="step">
+        <h3>沿用老師的三個階段：AI 下指令 → 程式執行 → AI 回答</h3>
+        <p>V1 是最簡單的版本：一個問題、一個工具、問兩次 AI。流程沿用老師的範例，只把工具換成查股價：</p>
+        <div class="flow">
+          <div><b>① AI 判斷</b>把問題轉成工具請求：要用 get_quote，代號 2330</div>
+          <div class="arrow">→</div>
+          <div><b>② 程式檢查並執行</b>先檢查請求格式對不對，再去證交所查資料</div>
+          <div class="arrow">→</div>
+          <div><b>③ AI 回答</b>把原本的問題和查到的結果交給 AI，用白話回答並註明資料日期</div>
+        </div>
+        <p>我的理解：第一段提示是在告訴 AI「你有哪些工具可以用、要用什麼格式回覆」；最後一段則是請 AI 只根據查到的資料回答，而且不提供買賣建議。</p>
+        <figure class="shot"><img src="../assets/img/lesson-08/v1-routing-prompt.webp" alt="V1 的提示：告訴 AI 只有 get_quote 一個工具和輸出格式，AI 回傳要查代號 2330" loading="lazy"><figcaption>第一階段的提示：告訴 AI 有哪些工具、只能用哪種格式回覆。最下面是 AI 回傳的工具請求</figcaption></figure>
+        <figure class="shot"><img src="../assets/img/lesson-08/v1-answer.webp" alt="第三階段：AI 根據工具結果回答台積電 2026-11-05 收盤 2,240 元" loading="lazy"><figcaption>第三階段：AI 根據查到的結果回答，同一個問題從「無法提供」變成有數字、有日期、有來源</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>換個問法只給公司名稱，AI 就卡住了</h3>
+        <p>接著我問「長榮航太最新收盤多少？」，故意挑一家比較少人知道代號的公司。get_quote 需要代號，但 AI 不知道長榮航太的代號，只能反問使用者「請提供股票代號」。使用者如果也不知道代號，就問不下去了。</p>
+        <p>而且 AI 每次的回答不完全一樣，這次剛好只是反問，之前還遇過 AI 隨便帶一個股票代號就去查的情況。我整理出 V1 的兩個問題：</p>
+        <ul>
+          <li><strong>AI 不知道股票代號</strong>：只能把問題丟回給使用者，或憑記憶帶入一個錯的代號。</li>
+          <li><strong>只能調用一次</strong>：就算有查代號的工具，查到代號以後，也沒有下一次機會可以查股價。</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>第三階段：V2，新增查代號的工具，改成多次調用</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>什麼時候停，交給 AI 判斷「資料夠了沒」</h3>
+        <p>V2 做兩件事：新增 search_stock，給公司名稱就能查出代號；並且改成<strong>多次調用</strong>，因為「先查代號、再用代號查股價」是兩個步驟，第二步要用到第一步的結果。</p>
+        <p>一開始我想的是「固定最多跑 3 輪」，但後來覺得用輪數決定什麼時候停有點笨：簡單的問題 1 輪就夠，複雜的問題可能第 3 輪剛查完資料就被強制停下來。我覺得<strong>應該是 AI 認為資料已經足以回答問題，就可以回覆</strong>。後來查資料才發現，這也是 Agent（會自己決定下一步要做什麼的 AI）的常規做法。</p>
+        <div class="flow">
+          <div><b>每一輪 AI 先判斷</b>目前查到的資料，夠不夠回答問題？</div>
+          <div class="arrow">→</div>
+          <div><b>不夠</b>指定這一輪要用的工具，程式執行後把結果交回</div>
+          <div class="arrow">→</div>
+          <div><b>夠了</b>停止查詢，交給 AI 整理回答</div>
+        </div>
+        <p>不過還是設了一個<strong>安全上限 5 輪</strong>，萬一 AI 一直覺得不夠、一直查下去，才不會無限調用、用光 API 額度。我也加了一條規則：<strong>股票代號只能來自使用者的問題或 search_stock 的結果，不可以憑記憶填寫。</strong></p>
+        <p>工具和規則分別列成兩張清單，由 AI 協助寫的程式自動組成給 AI 看的說明，之後要加工具或改規則，只要改清單就好。改完再問一次長榮航太，AI 就會自己先查代號 2645，第 2 輪再查股價。</p>
+        <figure class="shot"><img src="../assets/img/lesson-08/v2-fix-v1.webp" alt="V2 執行紀錄：第 1 輪 search_stock 查到長榮航太代號 2645，第 2 輪 get_quote 查到收盤 154.0 元" loading="lazy"><figcaption>同一題「長榮航太最新收盤多少？」：第 1 輪查代號、第 2 輪查股價</figcaption></figure>
+        <div class="callout warn"><b>小插曲</b> 連續呼叫幾次 AI，就遇到 Groq 免費額度的速率限制（錯誤代碼 429）。我的理解是一分鐘內用太多次，所以讓程式遇到時等 20 秒再試。</div>
+      </li>
+      <li class="step">
+        <h3>更難的問題：兩家公司都只給名稱，還要比較</h3>
+        <p>問「南僑和聯華食，今天誰的表現比較好？」。AI 第 1 輪同時查兩家公司的代號，第 2 輪同時查兩檔股價，接著判斷資料夠了就停下來回答，而且照我在回答提示裡加的寫法：<strong>先講結論，再列數字</strong>。</p>
+        <figure class="shot"><img src="../assets/img/lesson-08/v2-compare.webp" alt="比較南僑和聯華食：2 輪工具後，AI 回答聯華食跌幅較小、表現較好，並附上比較表" loading="lazy"><figcaption>2 輪工具就查完，AI 的回答先講結論、再列比較表</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>失敗了：AI 用全名搜尋，證交所登記的卻是簡稱</h3>
+        <p>再問「長榮的海運和航空，今天哪個漲比較多？」。AI 用「長榮海運」「長榮航空」搜尋，但證交所登記的是簡稱「長榮」「長榮航」，所以兩個都查不到，AI 就直接放棄了。原因有兩個：</p>
+        <ul>
+          <li>使用者和 AI 習慣講全名，但證交所的資料是簡稱。</li>
+          <li>我寫的規則是「查不到就不要再猜、直接回答」，讓 AI <strong>明明還有輪數可以用</strong>，卻一查不到就放棄。</li>
+        </ul>
+        <p>所以我把那條規則改成：<strong>查不到時，可能是關鍵字和證交所的簡稱不同，下一輪改用較短的關鍵字再搜尋，從結果中挑出符合的公司。</strong>改完後，AI 第 2 輪改搜「長榮」，找到 4 家公司，再自己挑出海運（2603）和航空（2618）去查股價。</p>
+        <div class="shots-2">
+          <figure class="shot"><img src="../assets/img/lesson-08/v2-search-fail.webp" alt="修改前：用長榮海運、長榮航空搜尋都查無符合的公司，AI 無法比較" loading="lazy"><figcaption>修改前：用全名搜尋都查不到，AI 只用了 1 輪就放棄</figcaption></figure>
+          <figure class="shot"><img src="../assets/img/lesson-08/v2-search-fixed.webp" alt="修改規則後：第 2 輪改搜長榮，第 3 輪查兩檔股價，AI 回答長榮航空上漲較多" loading="lazy"><figcaption>修改規則後：第 2 輪改搜「長榮」，第 3 輪查股價，成功回答</figcaption></figure>
+        </div>
+      </li>
+      <li class="step">
+        <h3>測試停止機制：查不到的公司，AI 會不會一直查下去？</h3>
+        <p>停止的時機交給 AI 判斷，所以我要測一個「怎麼查都查不到」的情況：問「天天開心公司的股價多少？」。AI 搜了「天天開心」和「天天」兩輪都查不到，就停下來說明找不到這家公司，離上限 5 輪還很遠。</p>
+        <p>這表示把停止時機交給 AI 是可行的：查得到就停，真的查不到也會放棄，不會一直查下去。上限 5 輪只是萬一的保險。</p>
+        <figure class="shot"><img src="../assets/img/lesson-08/v2-stop-check.webp" alt="問天天開心公司的股價：AI 搜尋兩輪都查不到後停止" loading="lazy"><figcaption>查不到的公司，AI 試了 2 輪就停止，沒有撞到安全上限</figcaption></figure>
+      </li>
+    </ol>
+
+    <h3>第四階段：做成網頁介面</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>請 AI 設計畫面，讓使用者看清楚 AI 每一步做了什麼</h3>
+        <p>最後用 Gradio 做成網頁介面，介面寫法沿用老師的範例，背後是 V2 的多次調用和修改後的搜尋規則。畫面請 AI 協助設計，我給的指令是：</p>
+        <div class="prompt">我希望能讓使用者看清楚 AI 每一步做了什麼</div>
+        <p>畫面由上往下是：<strong>執行狀態</strong>（最後是怎麼停止的：AI 判斷資料足夠，或達到安全上限）→ <strong>AI 的回答</strong> → <strong>過程</strong>。過程裡，每一次判斷都分成三塊：AI 實際回傳的判斷、調用的工具、工具回傳的資料。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-08/gradio-process.webp" alt="網頁介面的過程區：第 1 次判斷，AI 決定用 search_stock 搜尋長榮海運和長榮航空，下方是兩個工具回傳的查無結果" loading="lazy"><figcaption>「過程」區：每一次判斷都列出 AI 的決定、調用的工具和工具回傳的資料</figcaption></figure>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">03</span>成果</h2>
+    <p>同樣幾個問題，從 V1 到 V2 的結果（資料日期都是 2026-11-05）：</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>問題</th><th>AI 用了哪些工具</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>2330 最新收盤多少？（不給工具）</td><td>無</td><td>「無法提供即時的股價資訊」</td></tr>
+          <tr><td>2330 最新收盤多少？（V1）</td><td>get_quote(2330)</td><td>台積電收盤 2,240 元</td></tr>
+          <tr><td>長榮航太最新收盤多少？（V1）</td><td>無，選擇反問</td><td>請使用者提供股票代號</td></tr>
+          <tr class="best"><td>長榮航太最新收盤多少？（V2）</td><td>第 1 輪 search_stock → 第 2 輪 get_quote</td><td>長榮航太（2645）收盤 154.0 元</td></tr>
+          <tr class="best"><td>南僑和聯華食，今天誰的表現比較好？</td><td>第 1 輪查兩家代號 → 第 2 輪查兩檔股價</td><td>聯華食跌 0.28%，較南僑跌 0.31% 好</td></tr>
+          <tr><td>長榮的海運和航空，今天哪個漲比較多？（改規則前）</td><td>1 輪，用全名搜尋查不到</td><td>無法比較</td></tr>
+          <tr class="best"><td>長榮的海運和航空，今天哪個漲比較多？（改規則後）</td><td>全名查不到 → 改搜「長榮」→ 查兩檔股價，共 3 輪</td><td>長榮航 +3.09%，長榮 −3.36%</td></tr>
+          <tr><td>天天開心公司的股價多少？</td><td>搜尋 2 輪都查不到</td><td>說明查不到這家公司，自己停止</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="links">
+      <a class="btn" href="https://colab.research.google.com/drive/1OBKbyy06WbQUWtN6GxBDmCo353eG2Cdn" target="_blank" rel="noopener">打開 Colab 筆記本 ↗</a>
+    </div>
+    <div class="callout warn"><b>提醒</b> 這是課堂作業的教學範例，不是投資建議。股價等資料以作業當時（2026-11-05）查到的為準；工具只查證交所的上市股票，不含上櫃股票。使用的 AI 模型和服務的免費額度，也以作業當時的了解為準。</div>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">04</span>我的心得</h2>
+    <div class="reflection">
+      <p>上完課加上這次的作業，我對 Tool Use 的理解是：LLM 本身並不具備「查股價」或「執行程式」的能力，所以我們做的是讓 LLM 判斷目前的情況，產生指令給電腦去執行。設計的重點就變成怎麼跟 AI 介紹工具：有哪些工具、每個工具要給什麼、會回傳什麼，以及提示 LLM 根據使用者的問題，自己判斷要用什麼工具來取得足夠的資訊。</p>
+      <p>作業裡我只把工具和規則列成兩張清單，沒有寫「先查代號、再查股價」這樣的步驟，但 AI 看了工具說明，就會根據問題和工具回傳的情況，思考下一輪要繼續用工具還是回答。輪數上限只是保險，避免它無限查下去。不過我也發現，AI 產生的指令還是需要檢查防呆。例如 AI 不知道正確的股票代號，就自己帶入一個錯的，程式照樣執行，查出來的數字看起來完全正常，這種錯誤反而最難發現。作業裡目前還沒有做到，但我想可以讓它再查一次 API，自己確認股票代號和公司名稱是否一致。</p>
+      <p>整體來說，這份作業讓我更清楚 Tool Use 的架構，也更明白為什麼現在的 AI 工具可以用最新的資訊回答問題，或做比較複雜的運算，背後應該也是這樣的 Tool Use 架構。</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>AI 不知道的最新資料，要確認它有沒有「去查」</b>問 AI 價格、法規、最新消息時，看它的回答有沒有附上查詢來源和資料日期；沒有的話，就當作它只是憑記憶回答，要自己再核對。</li>
+      <li><b>先試試看 AI 自己做不做得到</b>想請 AI 做一件新工作時，可以先不給任何資料直接問一次，確認它卡在哪裡，再決定要補什麼資料或工具給它。</li>
+      <li><b>把「能用什麼」和「要遵守什麼」寫成清單</b>例如請 AI 整理料號或規格時，給它一份清單並規定「料號只能來自這份清單，不可以憑記憶填寫」，比一步步規定流程更有彈性。</li>
+      <li><b>數字看起來正常，不代表是對的</b>AI 帶錯一個代號，查出來的數字一樣很像真的。重要的數字可以請 AI 同時列出它用的代號或來源，方便自己對照。</li>
+      <li><b>請 AI 把每一步攤開給你看</b>就像這次的網頁介面，把 AI 每一輪的判斷、用的工具和查到的資料都列出來，出錯時才知道是哪一步出了問題。</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

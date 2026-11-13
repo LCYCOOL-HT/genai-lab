@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Pages｜新手工具入門</title>
+  <meta name="description" content="用 AI 做好的網頁（index.html），四個步驟免費放上網路，得到一個可以分享的網址。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-tool="GitHub Pages">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / <a href="../index.html#tools">新手工具入門</a> / GitHub Pages</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">新手工具入門 · 把網頁放上網路</div>
+    <h1>GitHub Pages</h1>
+    <div class="hero-badges"><span class="cost">免費</span><span class="tag tool">約 3 分鐘讀完</span></div>
+    <p class="lead">請 AI 做好一個網頁之後，想傳給同事看？GitHub Pages 可以<strong>免費把網頁放上網路</strong>，得到一個網址，手機、電腦打開就能看。</p>
+    <div class="links hero-links">
+      <a class="btn" href="https://github.com/" target="_blank" rel="noopener">前往 GitHub ↗</a>
+    </div>
+  </section>
+
+  <section class="block" id="prepare">
+    <h2><span class="num">01</span>先準備好網頁檔</h2>
+    <p>請 AI 聊天助手做網頁時，可以說「<strong>請做成單一的 index.html 檔</strong>」。把它存到電腦，用瀏覽器打開，就能先在自己電腦上看。</p>
+    <div class="callout"><b>檔名很重要</b> 主要的網頁檔名一定要叫 <code>index.html</code>，GitHub Pages 才知道要先打開哪一個。有圖片的話，可以一起放在 <code>assets</code> 資料夾。</div>
+  </section>
+
+  <section class="block" id="how">
+    <h2><span class="num">02</span>四個步驟放上網路</h2>
+    <ol class="steps">
+      <li class="step">
+        <h3>註冊 GitHub 帳號，建立一個 Repository</h3>
+        <p>Repository（簡稱 repo）就是一個放檔案的資料夾。登入後按右上角的「＋」，選 <strong>New repository</strong>。</p>
+        <figure class="shot narrow"><img src="../assets/img/tools/gh-new-repo.webp" alt="GitHub 右上角加號選單中的 New repository" loading="lazy"><figcaption>右上角「＋」→ New repository</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>取一個名字，選 Public，按建立</h3>
+        <p>名字用英文，例如 <code>my-first-page</code>，它會變成網址的一部分。可見度選 <strong>Public</strong>，再按綠色的建立按鈕。</p>
+        <figure class="shot narrow"><img src="../assets/img/tools/gh-repo-name.webp" alt="填寫 Repository name 的欄位" loading="lazy"><figcaption>在 Repository name 填名字</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>上傳 index.html</h3>
+        <p>在 repo 頁面按 <strong>Add file → Upload files</strong>，把 <code>index.html</code>（和 assets 資料夾）拖進去，最後一定要按綠色的 <strong>Commit changes</strong> 才算存好。</p>
+      </li>
+      <li class="step">
+        <h3>開啟 GitHub Pages</h3>
+        <p>按上方的 <strong>Settings</strong>，左邊選 <strong>Pages</strong>，在 Branch 選 <code>main</code>，按 <strong>Save</strong>。</p>
+        <figure class="shot narrow"><img src="../assets/img/tools/gh-settings.webp" alt="repo 上方選單最右邊的 Settings" loading="lazy"><figcaption>上方選單最右邊的 Settings</figcaption></figure>
+        <figure class="shot narrow"><img src="../assets/img/tools/gh-branch.webp" alt="Pages 設定中的 Branch 選單與 Save 按鈕" loading="lazy"><figcaption>Branch 從 None 改成 main，按 Save</figcaption></figure>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="done">
+    <h2><span class="num">03</span>完成！你的網址長這樣</h2>
+    <p>等 1～幾分鐘，就能用這個網址看到網頁：</p>
+    <div class="callout"><code>https://你的帳號.github.io/repo名稱/</code></div>
+    <p>例如我第 5 堂的遊戲：<a href="https://lcycool-ht.github.io/chem-day-safety/" target="_blank" rel="noopener">lcycool-ht.github.io/chem-day-safety</a>。之後要更新，只要重新上傳新的 <code>index.html</code>，網頁就會自動更新。</p>
+    <div class="callout warn"><b>注意</b> Public 代表<strong>全世界都看得到</strong>，網頁和檔案裡不要放個資或公司機密。</div>
+  </section>
+
+  <section class="block" id="examples">
+    <h2><span class="num">04</span>作品集裡的實例</h2>
+    <div class="tool-examples" id="tool-examples"></div>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>操作畫面截自 GitHub 官方文件「GitHub Pages 快速入門」（2026/11），版權屬 GitHub。步驟整理參考生成式 AI 課程第 5 堂講義。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

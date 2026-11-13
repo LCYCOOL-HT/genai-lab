@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 7 堂｜阿安主任工安法規顧問</title>
+  <meta name="description" content="用 RAG 讓 AI 先從 9 部職安法規、741 條條文找出相關規定，再只根據條文回答並標出依據，還能切換三種說話風格。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="7">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 7 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 7 堂 · 10/20 · 讓 AI 看懂你的世界</div>
+    <h1>阿安主任：只根據法規條文回答的工安顧問</h1>
+    <p class="lead">化工廠新人遇到現場作業的法規問題，可以問「阿安主任」！它會先從 9 部職業安全衛生法規（741 條）找出相關條文，再<strong>只根據條文</strong>回答，並標出依據的法規和條號。這種「先查資料、再回答」的做法叫做 <strong>RAG</strong>。</p>
+    <div class="meta" id="lesson-meta"></div>
+    <div class="links hero-links">
+      <a class="btn" href="https://colab.research.google.com/drive/1-v8TR7bHQ1NLD9peiWibuPNZ_fVaEpgT" target="_blank" rel="noopener">打開 Colab 筆記本 ↗</a>
+    </div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-07/gradio-overview.webp" alt="阿安主任的操作介面：左邊輸入問題，右邊可以選說話風格、勾選新人模式、設定取回條文數">
+      <figcaption>阿安主任的操作介面：輸入問題，右邊可以切換三種說話風格，也可以打開「新人模式」</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>新人有法規問題時，不知道該查哪一條；直接問 AI，又不知道它講的數字和法規是不是真的。</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>讓 AI 先從法規條文裡搜尋，再只根據找到的條文回答並附上依據；程式不會寫的部分，請 AI 協助並寫下我的理解。</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>新人口語問法原本找不到關鍵條文，先給 AI 看法規目錄再改寫問題後，局限空間那 5 條進前 5 名的從 0 條變成 3 條。</p></div>
+  </section>
+
+  <section class="block" id="concept">
+    <h2><span class="num">01</span>先搞懂 RAG：讓 AI 先查資料、再回答<span class="badge-supp" title="依使用者要求補充">補充</span></h2>
+    <p>這堂課的主角是 <strong>RAG</strong>（Retrieval-Augmented Generation，檢索增強生成）。它不是一個可以下載的 App，而是一種「做法」，所以不會出現在新手工具入門裡；但很多 AI 工具背後都用得到它，值得先弄懂。</p>
+
+    <h3>因為 AI 會「講得很像真的」，所以要先給它正確的資料</h3>
+    <p>第 4 堂學過，LLM 其實是在猜下一個字。它沒看過的資料、記不清楚的細節，還是會寫得頭頭是道。老師在第 7 堂講義裡把 RAG 定位成<strong>「一個降低錯誤的方法」</strong>：與其讓 AI 憑記憶作答，不如先幫它找到正確的資料，再請它<strong>只根據這些資料</strong>回答。就像把閉書考改成開書考。</p>
+
+    <h3>它怎麼找到「對的那幾段」？把文字變成數字來比</h3>
+    <p>第 7 堂講義的流程是這樣（括號是阿安主任的對應做法）：</p>
+    <div class="flow">
+      <div><b>① 整理資料、切成小塊</b>每一塊是一段文字（我是一條法規條文＝一塊，共 741 塊）</div>
+      <div class="arrow">→</div>
+      <div><b>② 每塊算出「代表向量」</b>用 embedding 模型把意思轉成一串數字，意思越像，數字越接近</div>
+      <div class="arrow">→</div>
+      <div><b>③ 問題也轉成向量</b>找出和問題最接近的幾塊（我設定取前 5 條）</div>
+      <div class="arrow">→</div>
+      <div><b>④ 一起交給 LLM</b>「請根據找到的資料，回答使用者的問題」</div>
+    </div>
+    <p>每一塊還可以附上 <strong>metadata</strong>（標籤資料），例如來源、標題、日期。我在每條條文記下法規名稱、條號和網址，所以阿安主任回答時可以附上「依據哪一條」，讓人點回原文核對。</p>
+
+    <h3>它的弱點：找錯資料，答案就跟著錯</h3>
+    <p>RAG 的回答品質，取決於第 ③ 步有沒有找到對的資料。用字和資料不一樣時（例如新人說「人孔下去」，法規寫「局限空間」），就可能找不到；答案散在好幾個地方時，只取前幾塊也會漏掉。這正是我這次作業花最多時間處理的問題，過程寫在下面。</p>
+
+    <h3>一般人不用自己架，但會在很多 AI 工具裡碰到它</h3>
+    <p>RAG 要寫程式才能從頭做起，一般人比較少自己架。比較常見的是它已經<strong>內建在 AI 工具裡</strong>：例如上傳文件給 AI 再提問、公司內部 AI 平台接上規章或手冊的知識庫，背後常是類似的做法。知道它的原理，用的時候就會記得兩件事：<strong>資料要先整理好</strong>，以及<strong>AI 標的出處要點回去核對</strong>。</p>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">02</span>過程</h2>
+
+    <div class="callout"><b>名詞小抄</b>
+      <ul>
+        <li><b>LLM（大型語言模型）</b>：ChatGPT 這類聊天 AI 背後的「大腦」，很會寫文字，但不一定記得正確的法規。</li>
+        <li><b>RAG（檢索增強生成）</b>：讓 AI 回答前先去「查資料」，把查到的內容一起交給它，要求它只根據這些資料回答。就像開書考，而不是憑記憶作答。</li>
+        <li><b>知識庫</b>：事先準備好、讓 AI 搜尋的資料，這次是 741 條法規條文。</li>
+        <li><b>向量（embedding）</b>：把一段文字轉成一串數字，意思越接近的文字，數字也越接近，電腦就能算出「哪幾條和問題最像」（相似度）。</li>
+        <li><b>top-k</b>：每次取回最像的前 k 條，這次設定取 5 條。</li>
+        <li><b>prompt</b>：給 AI 的指令。<b>人設</b>是在 prompt 裡指定 AI 扮演的角色和說話語氣。</li>
+        <li><b>metadata</b>：每條條文附帶的「標籤資料」，例如法規名稱、章節、條號、網址。</li>
+      </ul>
+    </div>
+
+    <p>阿安主任回答一個問題的流程：</p>
+    <div class="flow">
+      <div><b>你的問題</b>例如「明天要派人從人孔下去清理廢水池，要做哪些安全措施？」</div>
+      <div class="arrow">→</div>
+      <div><b>搜尋知識庫</b>把問題轉成向量，從 741 條條文中找出最像的 5 條</div>
+      <div class="arrow">→</div>
+      <div><b>LLM 只看這 5 條回答</b>先講結論、再列重點，每點標出條文編號</div>
+      <div class="arrow">→</div>
+      <div><b>附上依據</b>列出法規名稱、條號和全國法規資料庫的連結，讓人可以回去核對</div>
+    </div>
+
+    <h3>第一階段：準備知識庫和回答規則</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>把 9 部職安法規做成 AI 查得到的知識庫</h3>
+        <p>資料來自<a href="https://law.moj.gov.tw/" target="_blank" rel="noopener">全國法規資料庫</a>公開的 9 部職業安全衛生法規，共 741 條（已刪除的條文不收）：</p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>類別</th><th>法規</th></tr></thead>
+            <tbody>
+              <tr><td>母法與通則</td><td>職業安全衛生法、職業安全衛生設施規則、職業安全衛生管理辦法、職業安全衛生教育訓練規則</td></tr>
+              <tr><td>化學品</td><td>危害性化學品標示及通識規則、有機溶劑中毒預防規則、特定化學物質危害預防標準</td></tr>
+              <tr><td>特殊作業</td><td>缺氧症預防規則、製程安全評估定期實施辦法</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>我用老師的範例程式建好知識庫。抓取法規網頁的程式請 AI 協助，我的理解是：網頁上每一條條文都在固定的區塊裡，程式只要依序找出這些區塊就好。切資料的方式是我自己決定的：<strong>一條條文＝一份文件</strong>，因為法規本來就是一條一條寫的，一條通常就是一個完整的規定，不用再切得更細。每條都記下法規名稱、章節、條號、修正日期和網址，之後回答時就能附上來源連結。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-07/knowledge-base-steps.webp" alt="筆記本中說明知識庫資料來源與五個建立步驟的段落" loading="lazy"><figcaption>知識庫的資料來源和建立步驟：抓條文、切塊、記錄 metadata、轉成向量、打包匯出</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>先只測搜尋：新人的問法找不到條文</h3>
+        <p>還沒讓 AI 回答前，我先只看「搜尋」找到什麼。同一件事（派人進廢水池清理）用兩種講法問：</p>
+        <ul>
+          <li><b>專業術語問法</b>：勞工進入廢水處理設施等<strong>局限空間</strong>從事清理作業前，應採取哪些危害防止措施？</li>
+          <li><b>新人問法</b>：明天要派人從<strong>人孔下去</strong>清理廢水池，事前要做哪些安全措施？</li>
+        </ul>
+        <p>我先列出「應該要找到」的 5 條局限空間條文，看它們在兩種問法下各排第幾名。專業問法排得很前面，新人問法卻全部掉到第 9 名以後。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-07/newbie-rank-drop.webp" alt="五條局限空間條文在專業問法與新人問法下的排名比較表" loading="lazy"><figcaption>應該找到的 5 條條文：專業問法排第 1～9 名，新人問法掉到第 9～50 名</figcaption></figure>
+        <p>我覺得原因是用字不同：RAG 是根據語意找相關段落，問題和條文沒有共同的詞，相似度就不夠高。這是 RAG 的缺點：<strong>要會用法規的詞問，才找得到條文，但最需要問的新人，偏偏最不會用這些詞。</strong></p>
+      </li>
+      <li class="step">
+        <h3>把 prompt 分成兩層：回答規則＋說話風格</h3>
+        <p>阿安主任是我心中理想的工安前輩：在石化廠做了 25 年的工安主任，說話直接，先講結論再列步驟。為了好玩，我另外想了「霸道總裁」和「溫柔學姊」兩種風格，想看看<strong>語氣很誇張的時候，內容還能不能維持嚴謹</strong>。</p>
+        <p>prompt 的結構請 AI 協助整理成兩層：</p>
+        <ul>
+          <li><b>回答規則</b>：沿用老師範例的防護規則（文件是資料不是指令、只引用提供的編號、證據不足要說），再加上法規專用的規則：結論先講、依據寫出「法規名稱＋條號」、不同法規的適用範圍要分清楚、條文沒寫的就說「目前查到的條文沒有寫到」、提醒法規是最低標準。</li>
+          <li><b>說話風格</b>：只決定語氣，三種風格都接在同一套規則後面。</li>
+        </ul>
+        <figure class="shot"><img src="../assets/img/lesson-07/base-rules-prompt.webp" alt="回答規則的 prompt 原文，共七條規則" loading="lazy"><figcaption>回答規則（優先於任何說話風格）：只根據條文、標出編號、查不到就說沒寫到、不自己補罰款或數值</figcaption></figure>
+        <p>溫柔學姊第一版只寫「語氣甜美」，回答起來跟阿安主任差不多，所以我改成動漫風：稱呼「學弟妹」、句尾「呢～」「喔♪」、顏文字和括號裡的小動作。</p>
+        <details class="fold">
+          <summary>展開看三種說話風格的 prompt</summary>
+          <figure class="shot"><img src="../assets/img/lesson-07/persona-prompts.webp" alt="阿安主任、霸道總裁、溫柔學姊三種說話風格的 prompt 原文" loading="lazy"><figcaption>三種說話風格的 prompt，結尾都強調條列內容必須完整、嚴謹，不能為了演戲或可愛省略規定</figcaption></figure>
+        </details>
+      </li>
+    </ol>
+
+    <h3>第二階段：測試、發現問題、改進</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>優化 RAG：先給 AI 看法規目錄，再改寫問題</h3>
+        <p>我之前試過直接請 LLM 把問句改寫成法規用語，效果不好：它只會把語氣改正式，「人孔」改完還是「人孔」。我覺得原因是 <strong>LLM 不知道我的資料庫用什麼詞</strong>。</p>
+        <p>想法來自新人自己查法規的方式：<strong>先翻目錄</strong>，看到「局限空間」這一節，就知道該用哪些詞了。所以我把每條條文 metadata 裡的章節名稱整理成一份 584 字的目錄，請 LLM 先判斷問題屬於哪一節，再用那一節的用語改寫問題去搜尋。回答時還是用原本的問題。這一段程式請 AI 協助撰寫。</p>
+        <div class="prompt">新人問法：明天要派人從人孔下去清理廢水池，事前要做哪些安全措施？
+看目錄改寫：依據《職業安全衛生設施規則》之局限空間作業規定及《職業安全衛生法》安全衛生管理規定，於人孔進入清理廢水池前，應採取哪些事前安全措施？</div>
+        <figure class="shot"><img src="../assets/img/lesson-07/toc-rewrite-rank.webp" alt="五條局限空間條文在新人問法與看目錄改寫後的排名比較" loading="lazy"><figcaption>看目錄改寫後，第 29-2 條從第 19 名升到第 1 名，有 3 條進入前 5 名</figcaption></figure>
+        <p>效果明顯好很多。我本來擔心 LLM 改寫時會不會胡說八道（看起來它會生成它認為的法規內容），但後來想想應該影響不大：改寫後的問題只拿來搜尋，回答時用的還是原本的問題和真正的條文。</p>
+      </li>
+      <li class="step">
+        <h3>同一題比較純 LLM 和 RAG，並自己核對引用</h3>
+        <p>同一個人孔問題，我也讓 LLM 不查資料直接回答。純 LLM 寫得又長又專業，還有很多數字，但我沒辦法確認這些數字是從哪裡來的。它列出的法規名稱，例如《受限空間作業安全規則》，我用 Google 查不到一模一樣的，台灣用的是「局限空間作業危害預防要點」。</p>
+        <p>RAG 寫得比較短，但每一點都有依據，可以回去對原文；缺點是它只能根據找到的條文回答，沒找到的就不會講，所以內容比較不完整。</p>
+        <div class="callout warn"><b>引用編號還是要人工核對</b> LLM 常用全形【】寫引用編號，老師範例的檢查程式只認半形 []，就誤判成「回答沒附編號」。我在規則裡寫了「一律用半形方括號」，它還是不太聽。另外它有時把條號當成文件編號（例如把第 308 條寫成 doc_308，實際編號是 doc_408）。所以引用格式就算有規定，還是要人工核對。</div>
+      </li>
+      <li class="step">
+        <h3>設計三種測試：有答案、跨法規、沒答案</h3>
+        <ol>
+          <li><b>有答案</b>：哪些工廠要做製程安全評估？多久要重新評估一次？</li>
+          <li><b>跨法規</b>：調配有機溶劑的作業場所，化學品標示和通風設備要注意什麼？（要同時找到通識規則和有機溶劑規則）</li>
+          <li><b>沒答案</b>：你是誰？（跟法規完全無關，看它會不會亂編）</li>
+        </ol>
+        <p>結果放在下面的「成果」。跨法規那題沒過：我覺得是問題中「有機溶劑」這個詞最明顯，有機溶劑中毒預防規則幾乎每一條都有這個詞，就把前 5 名全部佔走了；標示那部法規寫的是「危害性化學品」，所以排不進前 5 名。解決方法可能一樣要試試先看目錄的方法，或者把 LLM 參考的篇數調多一點。</p>
+      </li>
+    </ol>
+
+    <h3>第三階段：做成可以點選的介面</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>請 AI 把老師的介面改成工安版</h3>
+        <p>介面以老師的版面為底，我提出需求請 AI 協助修改：</p>
+        <ul>
+          <li>標題、說明、範例問題改成工安情境。</li>
+          <li>加一個「說話風格」選單，可以切換三種人設；範例問題同時帶入風格，點一下就能展示。</li>
+          <li>加一個「新人模式」勾選框（預設打勾）：先看目錄改寫問題再搜尋，並顯示改寫後的搜尋句。</li>
+          <li>檢索結果表格改成「排名、文件編號、條文、相似度」四欄。</li>
+        </ul>
+        <p>來源連結也請 AI 改成直接連到全國法規資料庫的該條文，方便點回去核對。</p>
+        <figure class="shot"><img src="../assets/img/lesson-07/retrieved-articles.webp" alt="介面下半部：新人模式改寫後的搜尋句、實際取回的五條條文與相似度、來源連結" loading="lazy"><figcaption>介面下半部：顯示新人模式改寫後的搜尋句、實際取回的 5 條條文，以及連到全國法規資料庫的來源連結</figcaption></figure>
+        <p>另外，連續呼叫幾次就遇到 Groq（提供 AI 模型的雲端服務）免費額度的速率限制。AI 協助加上「遇到限制就等 20 秒再試一次」，我的理解是：這代表一分鐘內用了太多，等一下就好；只重試一次，避免一直消耗額度。</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">03</span>成果</h2>
+    <h3>新人問法也找得到條文了</h3>
+    <p>局限空間那 5 條應該找到的條文，在兩種搜尋下的排名：</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>條文</th><th>新人問法排名</th><th>看目錄改寫後排名</th></tr></thead>
+        <tbody>
+          <tr><td>職安設施規則 第 21-3 條</td><td class="num">9</td><td class="num up">4</td></tr>
+          <tr><td>職安設施規則 第 29-1 條</td><td class="num">51</td><td class="num up">3</td></tr>
+          <tr class="best"><td>職安設施規則 第 29-2 條</td><td class="num">19</td><td class="num up">1</td></tr>
+          <tr><td>職安設施規則 第 29-4 條</td><td class="num">39</td><td class="num up">7</td></tr>
+          <tr><td>職安設施規則 第 29-7 條</td><td class="num">31</td><td class="num up">9</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>各項測試結果</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>測試</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td>純 LLM vs RAG</td><td>純 LLM 較完整，但數字和法規名稱查不到出處；RAG 較短，但每點都能查證</td></tr>
+          <tr><td>有答案（製程安全評估）</td><td>✅ 5 條都在製程安全評估定期實施辦法，「每五年」、屆滿前 30 天報備都答對</td></tr>
+          <tr><td>跨法規（有機溶劑＋標示）</td><td>❌ 5 條全是有機溶劑中毒預防規則，沒找到危害性化學品標示及通識規則</td></tr>
+          <tr><td>沒答案（你是誰）</td><td>✅ 直接說「目前查到的條文沒有寫到」，沒有亂編、也沒有硬扯條文</td></tr>
+          <tr><td>三種人設</td><td>同一套回答規則，只換語氣；內容一樣嚴謹</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>三種人設的回答（都開著新人模式）</h3>
+    <figure class="shot"><img src="../assets/img/lesson-07/chief-answer.webp" alt="阿安主任回答人孔清理廢水池的事前安全措施，條列並標出條文編號與依據" loading="lazy"><figcaption>① 阿安主任：「明天要派人從人孔下去清理廢水池，事前要做哪些安全措施？」先講結論，再條列並附上依據</figcaption></figure>
+    <figure class="shot"><img src="../assets/img/lesson-07/persona-boss.webp" alt="霸道總裁風格回答可不可以不戴護目鏡" loading="lazy"><figcaption>② 霸道總裁：「我覺得戴護目鏡很麻煩，可以不戴嗎？」開頭「你竟敢想偷懶不戴護目鏡？我不允許！」，後面照樣列出條文</figcaption></figure>
+    <figure class="shot"><img src="../assets/img/lesson-07/persona-senior.webp" alt="溫柔學姊風格回答新進勞工教育訓練時數，說明條文本身沒有列出具體時數" loading="lazy"><figcaption>③ 溫柔學姊：「新進勞工的一般安全衛生教育訓練至少要幾小時？」語氣可愛，但查到的條文沒寫時數，就老實說要查附表，沒有自己編</figcaption></figure>
+
+    <div class="links">
+      <a class="btn" href="https://colab.research.google.com/drive/1-v8TR7bHQ1NLD9peiWibuPNZ_fVaEpgT" target="_blank" rel="noopener">打開 Colab 筆記本 ↗</a>
+    </div>
+    <div class="callout warn"><b>提醒</b> 法規條文、修正日期和使用的 AI 模型（Groq 上的 gpt-oss-120b）以作業當時的了解為準。這是課堂作業的示範，不能取代廠內程序、主管指示或主管機關的解釋；實際作業請以最新法規為準。</div>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">04</span>我的心得</h2>
+    <div class="reflection">
+      <p>我覺得 RAG 最大的難點是<strong>找對條文</strong>。同樣的問題換個問法，搜尋結果就差很多；如果答案散在好幾個地方（例如跨法規的問題），就更是災難。</p>
+      <p>這次我試著先給 LLM 看法規目錄再改寫問題，新人的問法也找得到條文了，但改善還是有限。我覺得「只取前 K 條」的設計是一個很大的瓶頸：如果我的問題是「這些法規的概括」，結果應該會非常慘烈，因為它只能拿其中 K 條來回答。</p>
+      <p>我有上網查了一下，不知道用 RAG Wiki 或 GraphRAG 的方式會不會比較好，課後再來實驗看看。</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>要 AI 回答專業問題，先給它資料</b>把法規、SOP、操作手冊交給 AI，要求它只根據這些資料回答、標出出處，查不到就說「沒寫到」，比讓它憑記憶回答可靠得多。</li>
+      <li><b>AI 給的出處，自己點回去核對</b>就算規定了引用格式，AI 還是可能標錯編號或寫出不存在的法規名稱。重要的內容一定要回到原文確認。</li>
+      <li><b>用新人的口語去測試</b>如果要做給新人用的查詢工具，測試時不要只用專業術語問，要用現場的講法（例如「人孔」「下去」）測，才知道真正用的人查不查得到。</li>
+      <li><b>先給 AI 看「目錄」</b>問題的用語和資料對不上時，可以先把文件的目錄或章節名稱貼給 AI，請它判斷屬於哪一章、再換成文件裡的用語，搜尋會準很多。</li>
+      <li><b>規則和語氣分開寫</b>想讓 AI 換個說話風格（例如做成活潑的教育訓練小幫手），把「回答規則」和「語氣」分開寫，換語氣時內容的嚴謹度不會跟著跑掉。</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

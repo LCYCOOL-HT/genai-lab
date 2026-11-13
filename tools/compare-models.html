@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>不同的 AI 對話模型｜新手工具入門</title>
+  <meta name="description" content="什麼是 LLM？什麼是 API？常見的 AI 模型公司有哪些？用簡單的比喻說明。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-tool="不同的 AI 對話模型">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / <a href="../index.html#tools">新手工具入門</a> / 不同的 AI 對話模型</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">新手工具入門 · 認識 AI 模型</div>
+    <h1>不同的 AI 對話模型：認識 LLM API</h1>
+    <div class="hero-badges"><span class="cost">免費</span><span class="tag tool">約 3 分鐘讀完</span></div>
+    <p class="lead">ChatGPT、Gemini 這些 App 背後，是不同公司訓練的 <strong>LLM</strong>，就像不同的「大腦」。透過 <strong>API</strong>，程式不用打開 App 就能直接請這些大腦回答，也因此可以把同一個問題交給不同的大腦，比較誰答得好。第 4 堂的作業就是這樣做的。</p>
+  </section>
+
+  <section class="block" id="llm">
+    <h2><span class="num">01</span>App 是外殼，LLM 才是大腦</h2>
+    <p>ChatGPT、Gemini 這些 App 是你看得到的「外殼」，裡面負責思考、回答的「大腦」叫做 <strong>LLM（大型語言模型）</strong>，也就是 <a href="chat-assistant.html">AI 聊天助手</a>那頁介紹的「很會猜下一個字」的 AI。</p>
+    <p>不同公司訓練出來的大腦不一樣，同一個問題，答得好不好也會不一樣。那這些大腦來自哪裡？</p>
+  </section>
+
+  <section class="block" id="companies">
+    <h2><span class="num">02</span>這些大腦來自哪幾家公司？</h2>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>公司</th><th>模型系列</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>OpenAI</td><td>GPT</td><td>ChatGPT 的公司；也有開放下載的 gpt-oss</td></tr>
+          <tr><td>Google</td><td>Gemini</td><td>和 Google 搜尋、Gmail 等服務整合</td></tr>
+          <tr><td>Anthropic</td><td>Claude</td><td>這個網站和第 5 堂的遊戲都是用 Claude 做的</td></tr>
+          <tr><td>xAI</td><td>Grok</td><td>和社群平台 X 整合</td></tr>
+          <tr><td>Meta</td><td>Llama</td><td>開放下載（開源），可以架在自己的電腦上</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>開源模型是什麼？</b> 模型可以下載到自己的電腦或公司伺服器上跑，資料不用傳出去，比較安全；但需要很強的電腦，一般個人電腦通常跑不動。</div>
+    <p>想知道哪個模型比較強，可以參考 <a href="https://arena.ai/" target="_blank" rel="noopener">Arena</a>、<a href="https://artificialanalysis.ai/" target="_blank" rel="noopener">Artificial Analysis</a> 這類評比網站。不過課堂上也提醒：<strong>最準的還是用自己熟悉的工作題目親自測</strong>，才知道哪個最適合你。</p>
+  </section>
+
+  <section class="block" id="api">
+    <h2><span class="num">03</span>不開 App 也能用：API 是直通大腦的窗口</h2>
+    <p>平常我們是打開 App 跟大腦聊天。<strong>API</strong> 則是讓「程式」直接找大腦的窗口：不用進店裡坐下，把點單遞進窗口，就能拿到餐點。</p>
+    <div class="flow">
+      <div><b>你的程式</b>遞出點單：一段問題文字</div>
+      <div class="arrow">→</div>
+      <div><b>API 窗口</b>AI 公司的伺服器收到後，交給 LLM 回答</div>
+      <div class="arrow">→</div>
+      <div><b>拿回餐點</b>AI 的回答，程式可以接著自動處理</div>
+    </div>
+    <ul>
+      <li><strong>能做什麼</strong>：程式可以自動一次問很多問題，或把 AI 接進自己的系統。公司的內部 AI 平台、很多 AI 小工具，背後都是這樣做的。</li>
+      <li><strong>要付費嗎</strong>：通常是用多少付多少，也有些平台提供免費額度。</li>
+      <li><strong>專門提供 API 的平台</strong><span class="badge-new">New</span>：例如 Groq，可以用同一個窗口呼叫開放下載的模型（第 7、8 堂用它呼叫 gpt-oss-120b）。它有免費額度，但短時間內問太多次會被暫時擋下（第 8 堂遇到的錯誤代碼 429），等一下再試就好。</li>
+      <li><strong>API 金鑰</strong>：使用 API 需要一組「金鑰」，就像會員卡，<strong>絕對不能給別人或放到網路上</strong>，不然別人可以用你的額度。</li>
+    </ul>
+  </section>
+
+  <section class="block" id="compare">
+    <h2><span class="num">04</span>所以可以把同一題交給不同的大腦比較</h2>
+    <p>因為每家的大腦都能用同樣的方式找到，就能公平地比較。第 4 堂用的方法：<strong>同一份指令</strong>，每個 AI 都<strong>開新對話</strong>，再用<strong>同一張評分表</strong>逐條打分。這樣才看得出差別，而不是憑感覺。詳細過程可以看<a href="../lessons/lesson-04.html">第 4 堂的作品</a>。</p>
+    <p><span class="badge-new">New</span> 第 6 堂也用同一個測試情境，比較大模型 gpt-6-luna 和小模型 gpt-5.4-nano，再請第三個模型 gpt-5.6-terra 當評分員，避免「自己評自己」。結果小模型對話還不錯，但寫報告時會自己亂填，需要給它可以照抄的模板。詳細過程可以看<a href="../lessons/lesson-06.html">第 6 堂的作品</a>。</p>
+  </section>
+
+  <section class="block" id="examples">
+    <h2><span class="num">05</span>作品集裡的實例</h2>
+    <div class="tool-examples" id="tool-examples"></div>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程講義（第 4、6 堂）。模型名稱與方案以 2026/11 為準，變化很快，使用前請以各公司官網為準。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

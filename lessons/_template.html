@@ -1,0 +1,111 @@
+<!doctype html>
+<!--
+  新作品頁範本：複製成 lesson-NN.html 後，把所有【】的地方換掉，並刪除這段註解。
+  規則請看專案根目錄的 CLAUDE.md。不要加 <style> 或 style="..."，樣式一律用 style.css 現有的 class。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 【N】 堂｜【作品短標題】</title>
+  <meta name="description" content="【一句話說明這份作品，60 字內】">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="【N】">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 【N】 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 【N】 堂 · 【MM/DD】 · 【課程主題】</div>
+    <h1>【作品標題】</h1>
+    <p class="lead">【2～3 句：這次作業要做什麼、我用了什麼方法】</p>
+    <div class="meta" id="lesson-meta"></div>
+    <!-- 有線上作品時才放這組按鈕 -->
+    <div class="links hero-links">
+      <a class="btn" href="【作品網址】" target="_blank" rel="noopener">【打開作品】 ↗</a>
+    </div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-【NN】/【cover】.webp" alt="【描述圖片內容】">
+      <figcaption>【圖說】</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>【1～2 句】</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>【1～2 句】</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>【1～2 句，有數字就放數字】</p></div>
+  </section>
+
+  <!-- 這堂的重點是技術概念（例如 RAG、Tool Use）時才放；沒有就刪掉這個區塊，後面編號改回 01、02、03。寫法見 CLAUDE.md 第 6 節 -->
+  <section class="block" id="concept">
+    <h2><span class="num">01</span>先搞懂 【概念】：【一句話說它在做什麼】</h2>
+    <p>【這個概念是什麼；說明它是「做法」不是 App，所以不在新手工具入門】</p>
+    <h3>因為【AI 原本做不好的事】，所以【需要它】</h3>
+    <p>【引用第 N 堂講義的說法】</p>
+    <h3>【它怎麼運作】</h3>
+    <div class="flow">
+      <div><b>① 【步驟】</b>【說明（我在作業裡怎麼做）】</div>
+      <div class="arrow">→</div>
+      <div><b>② 【步驟】</b>【說明】</div>
+    </div>
+    <h3>【它的限制或弱點】</h3>
+    <p>【一兩句，接到過程中遇到的問題】</p>
+    <h3>【一般人會在哪裡碰到它】</h3>
+    <p>【內建在哪類 AI 工具裡＋使用時要留意的重點】</p>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">02</span>過程</h2>
+    <ol class="steps">
+      <li class="step">
+        <h3>【步驟標題：用一句話說出這步做了什麼】</h3>
+        <p>【說明】</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-【NN】/【檔名】.webp" alt="【描述】" loading="lazy"><figcaption>【圖說】</figcaption></figure>
+      </li>
+      <!-- 依需要複製更多 <li class="step"> -->
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">03</span>成果</h2>
+    <p>【成果說明、數字表格或截圖】</p>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">04</span>我的心得</h2>
+    <div class="reflection">
+      <p>【改寫自作業的反思，保留原意，第一人稱】</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>【一句話技巧】</b>【怎麼用在工作上，舉一個辦公室或工廠的例子】</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
