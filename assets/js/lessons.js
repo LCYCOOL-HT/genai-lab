@@ -23,7 +23,8 @@ window.SKILLS = {
   "ai-role-play":  { name: "讓 AI 扮演使用者",     desc: "設計固定的測試情境，請 AI 扮演使用者反覆對話，公平比較不同版本。" },
   "ground-in-docs":{ name: "給 AI 資料再回答",     desc: "把法規、手冊等可信資料交給 AI，要求只根據資料回答並標出處，查不到就說沒寫到。" },
   "ai-persona":    { name: "替 AI 設定角色",       desc: "回答規則和說話語氣分開寫，換角色、換語氣也不影響內容的嚴謹。" },
-  "ai-tools":      { name: "給 AI 工具去查",       desc: "AI 不知道的最新資料，做成工具讓它自己判斷何時去查、查幾次。" }
+  "ai-tools":      { name: "給 AI 工具去查",       desc: "AI 不知道的最新資料，做成工具讓它自己判斷何時去查、查幾次。" },
+  "rules-file":    { name: "幫 AI 寫員工手冊",     desc: "把要求寫成一份規則檔，開新對話 AI 先讀；發現做錯就補一條規則，下次不再犯。" }
 };
 
 /* 工具清單：LESSONS 的 tools 欄位只能用這裡的名稱。
@@ -126,6 +127,18 @@ window.LESSONS = [
     cover: "assets/img/lesson-08/gradio-answer.webp",
     tools: ["AI 聊天助手", "Google Colab"],
     skills: ["ai-tools", "read-ai-code"],
+    isNew: true
+  },
+  {
+    no: 9,
+    date: "2026-11-03",
+    course: "換你當老闆",
+    title: "生成式 AI 作品集：用 CLAUDE.md 讓 AI 接手「每週新增一頁」",
+    summary: "這個網站本身就是第 9 堂作業。我和 AI 邊做邊把規則寫進 CLAUDE.md，再開新對話只說一句「新增第 6,7,8 堂」，AI 就照規則做出三頁格式一致的作品頁。",
+    url: "lessons/lesson-09.html",
+    cover: "assets/img/lesson-09/new-cards.webp",
+    tools: ["Claude Code", "GitHub Pages"],
+    skills: ["rules-file", "ai-asks-me", "human-judge"],
     isNew: true
   }
 ];
