@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 9 堂｜用 CLAUDE.md 讓 AI 接手</title>
+  <meta name="description" content="這個作品集網站本身就是第 9 堂作業：我和 AI 邊做邊把規則寫進 CLAUDE.md，開新對話只說一句話，AI 就照規則做出格式一致的新作品頁。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-lesson="9">
+
+<header class="site-header">
+  <div class="wrap-wide">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI</span>生成式 AI 作品集</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumbs"><a href="../index.html">作品集</a> / 第 9 堂</div>
+
+  <section class="lesson-hero">
+    <div class="eyebrow">第 9 堂 · 11/03 · 換你當老闆</div>
+    <h1>生成式 AI 作品集：用 CLAUDE.md 讓 AI 接手「每週新增一頁」</h1>
+    <p class="lead">你正在看的這個網站，就是第 9 堂的作業。我把網站的規則寫成一份給 AI 看的「員工手冊」<strong>CLAUDE.md</strong>，之後只要開新對話說一句「新增第 N 堂」，AI 就會照同一套規則，把新一堂的作業整理成一頁。</p>
+    <div class="meta" id="lesson-meta"></div>
+    <div class="links hero-links">
+      <a class="btn" href="https://lcycool-ht.github.io/genai-lab/" target="_blank" rel="noopener">打開網站首頁 ↗</a>
+      <a class="btn ghost" href="https://github.com/LCYCOOL-HT/genai-lab/blob/main/CLAUDE.md" target="_blank" rel="noopener">看 CLAUDE.md 全文 ↗</a>
+    </div>
+    <figure class="shot hero-shot">
+      <img src="../assets/img/lesson-09/new-cards.webp" alt="首頁的作品卡片：第 6、7、8 堂三張新卡片的標題旁都有紅色 New 標記" loading="lazy">
+      <figcaption>開新對話只說一句「新增第 6,7,8 堂」，首頁就多了三張作品卡片，都自動標上紅色 New</figcaption>
+    </figure>
+  </section>
+
+  <section class="tldr">
+    <div class="tldr-item"><h3>想解決的問題</h3><p>同事知道 AI 很紅，卻不知道「不會寫程式的人」能拿 AI 做什麼。課程每週都有新作業，網站會一直長大，需要一套能重複使用的做法。</p></div>
+    <div class="tldr-item"><h3>AI 怎麼幫忙</h3><p>整個過程用 Claude Code。每次發現 AI 做得不對，我就請它把修正寫進 CLAUDE.md，下次自動生成時就不會再犯。</p></div>
+    <div class="tldr-item"><h3>成果</h3><p>開新對話只說一句話，AI 就做出第 6～8 堂三頁格式正確的作品頁；測出的缺陷也補成了新規則。</p></div>
+  </section>
+
+  <section class="block" id="concept">
+    <h2><span class="num">01</span>先搞懂 CLAUDE.md：寫給 AI 的員工手冊</h2>
+    <p>這堂課的主角是 <strong>CLAUDE.md</strong>。它不是一個 App，而是放在專案資料夾裡的一份文字檔，讓 AI 每次上工前先讀。第 9 堂講義把它比喻成「員工手冊」。</p>
+
+    <h3>因為把工作「交辦」給 AI 時，它每次都從零開始</h3>
+    <p>第 9 堂講義的主題是「換你當老闆」：從「問 AI」變成「交辦一件工作給 AI」，AI 不再只是顧問，而像員工一樣自己做完多個步驟，交出一份成品。但專案如果一直在同一個對話裡進行，<strong>對話會越來越長，換一台電腦也讀不到</strong>；開新對話，AI 又什麼都不記得。講義說，好老闆通常要說清楚三件事：<strong>要什麼成品、怎麼算做完、有什麼限制</strong>，重點就是「不要讓 AI 猜」。</p>
+
+    <h3>所以把這三件事寫成手冊，讓 AI 上工前先讀</h3>
+    <p>講義的公式是 <strong>AI Agent ＝ AI 模型（大腦）＋ Harness（工作裝備）</strong>：模型負責想，工作裝備負責讓它真的能讀檔、改檔、執行。規則檔就是工作裝備的一部分，Claude 用的叫 CLAUDE.md，一般通用的叫 AGENTS.md。在我的作品集裡，它是這樣運作的：</p>
+    <div class="flow">
+      <div><b>① 專案資料夾</b>讓 AI 有權限讀寫（我的網站資料夾）</div>
+      <div class="arrow">→</div>
+      <div><b>② 上工前先讀手冊</b>開新對話，AI 先讀 CLAUDE.md（共 12 節規則）</div>
+      <div class="arrow">→</div>
+      <div><b>③ 照規則做事</b>讀 eeclass 提交內容、挑截圖、做頁面、登記到資料清單</div>
+      <div class="arrow">→</div>
+      <div><b>④ 我驗收</b>看 New 標記檢查 AI 做了什麼，做錯就補一條規則</div>
+    </div>
+
+    <h3>但手冊沒寫到的，AI 就不會做，所以要邊用邊改</h3>
+    <p>新視窗測試時，格式全部正確，但第 7 堂的 RAG、第 8 堂的 Tool Use 都沒講清楚，原因就是規則沒寫到。講義也說：<strong>不用擔心沒有寫完美，可以持續改寫</strong>，而且這種規格書是由我們和 AI 一起討論出來的。</p>
+
+    <h3>一般人不用寫程式，也能替自己的 AI 寫一本手冊</h3>
+    <p>CLAUDE.md 是 <a href="../tools/claude-code.html">Claude Code</a> 這類會自己動手的 AI 工具會讀的檔案；講義也提到，不一定要叫這個名字，也可以直接跟 AI 說「先讀指定的員工手冊」。下次把一件重複的工作交給 AI 時，可以先問自己：<strong>要什麼成品、怎麼算做完、哪些不能動</strong>，我都寫清楚了嗎？</p>
+  </section>
+
+  <section class="block" id="process">
+    <h2><span class="num">02</span>過程</h2>
+
+    <div class="callout"><b>名詞小抄</b>
+      <ul>
+        <li><strong>Claude Code</strong>：會自己讀檔、改檔、執行指令的 AI，我用自然語言描述需求，它把網站做出來。</li>
+        <li><strong>CLAUDE.md</strong>：放在專案資料夾裡、給 AI 看的規則檔，AI 每次開工前會先讀。</li>
+        <li><strong>新視窗（新對話）</strong>：一個全新的對話，AI 沒看過之前的任何討論，只能靠 CLAUDE.md 了解專案。</li>
+        <li><strong>子代理</strong>：AI 把工作拆開，分派給幾個「小幫手」同時做，例如三個小幫手各做一頁。</li>
+        <li><strong>GitHub Pages</strong>：免費把網頁放上網路的服務，這個網站就放在上面。</li>
+      </ul>
+    </div>
+
+    <p>整個過程我都用 Claude Code。重點不是一次寫好規則，而是<strong>每次發現 AI 做得不對，就把修正寫進 CLAUDE.md</strong>，讓下一次自動生成時不會再犯。</p>
+
+    <h3>第一階段：先讓 AI 反問我</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>不直接叫 AI 做網站，先交代資料在哪、請它反問 3 個問題</h3>
+        <p>我先說明網站用途和每堂作業的資料位置，並規定只看 eeclass 提交內容和裡面的雲端連結，不讀本機的其他版本。AI 先整理了第 1～5 堂作業，再反問我：個資怎麼處理、要寫多詳細、GitHub 和風格怎麼安排。</p>
+        <div class="shots-2">
+          <figure class="shot"><img src="../assets/img/lesson-09/opening-prompt.webp" alt="我的開場指令：說明要做生成式 AI 課程作品集、作業資料位置，以及只看 eeclass 提交內容和雲端連結，最後請 AI 反問 3 個問題" loading="lazy"><figcaption>我的開場指令：說明網站用途、資料位置，以及「只看 eeclass 提交內容和雲端連結」</figcaption></figure>
+          <figure class="shot"><img src="../assets/img/lesson-09/ai-asks-me.webp" alt="AI 整理第 1～5 堂作業的表格，接著反問三個問題：哪些資訊要遮掉、每頁要寫多詳細、GitHub 和網站風格怎麼安排" loading="lazy"><figcaption>AI 先整理第 1～5 堂作業，再反問我 3 個問題</figcaption></figure>
+        </div>
+      </li>
+      <li class="step">
+        <h3>我的回答，後來都變成了規則</h3>
+        <p>個資一律不放（第 3 節）、可以放截圖（第 8 節）、讀者是公司同事（第 1 節）。其中「這個網站是給公司同事看的」，是整份 CLAUDE.md 最重要的一句，後面所有寫法都由它決定。</p>
+        <figure class="shot"><img src="../assets/img/lesson-09/my-answers.webp" alt="我的回答：所有個資都不能放上去、可以放截圖、GitHub 我自己處理，並補充網站是給公司同事看的" loading="lazy"><figcaption>我的回答：確定讀者是「公司同事」</figcaption></figure>
+        <figure class="shot narrow"><img src="../assets/img/lesson-09/first-homepage.webp" alt="AI 做出的第一版首頁：大標題、介紹文字、5 份作品 12 種工具 10 個 AI 技巧的統計數字，以及作品卡片" loading="lazy"><figcaption>AI 做出的第一版首頁，做得很快，但還有很多地方要從同事的角度調整</figcaption></figure>
+      </li>
+    </ol>
+
+    <h3>第二階段：五個關鍵決定，每個都寫進 CLAUDE.md</h3>
+    <p>第一版做得很快，但我從「同事會怎麼看」的角度檢查，做了五個關鍵決定：</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>決定</th><th>我發現的問題 → 怎麼改</th><th>寫進 CLAUDE.md</th></tr></thead>
+        <tbody>
+          <tr><td>① 拿掉膨風內容</td><td>AI 列出「12 種工具、10 個 AI 技巧」，看起來很多，但同事沒上課也用不了 → 拿掉統計數字和工具總覽</td><td>第 9.5 節：首頁只有三區，不加統計數字</td></tr>
+          <tr><td>② 工具名稱講白話</td><td>gpt-oss-120b、Gradio 對同事很陌生 → 聊天 AI 統稱「AI 聊天助手」，程式套件和 Excel 不列</td><td>第 9 節：工具標籤規則</td></tr>
+          <tr><td>③ 新手工具入門</td><td>同事需要知道「從哪裡開始」→ 5 個工具各一頁，要國中生看得懂、幾分鐘讀完</td><td>第 9.6 節：新工具「值得寫」的 5 項標準</td></tr>
+          <tr><td>④ 一頁講一件事</td><td>Claude Code 頁像在講三件不相干的事 → 改成一條故事線</td><td>第 9.6 節：寫作原則＋修改前後對照</td></tr>
+          <tr><td>⑤ New 標記</td><td>為了驗收開新視窗的測試 → AI 照規則新增的內容一律標 New</td><td>第 1.5 節</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <h3>決定①②：從同事的角度刪減</h3>
+        <p>AI 第一版的工具總覽列了 12 種工具。我判斷這有膨風的嫌疑，對同事也沒有幫助，決定拿掉。接著請 AI 分類「一般人免費就能用的工具」，再依結果把工具標籤改成同事看得懂的名稱。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-09/tool-overview-12.webp" alt="AI 第一版的工具總覽：分成 AI 對話與模型、AI 寫程式、平台與工具三類，共 12 張工具卡片" loading="lazy"><figcaption>AI 第一版的工具總覽：12 種工具，看起來很多，但同事沒上課也用不了</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>決定③：新手工具入門，並請 AI 定義什麼工具「值得寫」</h3>
+        <p>我定了每個工具頁的重點：國中生看得懂、不能長篇大論。我也想到：之後用到新工具時，AI 怎麼知道要不要寫一頁？所以請它定義「值得寫」，寫成 5 項標準，之後新增作品時 AI 會自己判斷。</p>
+        <figure class="shot"><img src="../assets/img/lesson-09/worth-writing-rules.webp" alt="寫進 CLAUDE.md 的值得寫 5 項標準表格，以及全部符合、只有同類、其他不符合三種處理方式" loading="lazy"><figcaption>寫進 CLAUDE.md 的「值得寫」5 項標準，以及判斷後的三種處理方式</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>決定④：一頁講一件事，我自己改寫定義當範例</h3>
+        <p>Claude Code 頁原本把「什麼是 AI Agent？」「什麼是 Vibe Coding？」並列，讀起來像三件不相干的事。我提出問題後，AI 改成一條故事線：Claude Code 是 AI Agent → 它會自己動手 → 所以我們可以用 Vibe Coding 的方式開發。</p>
+        <p>AI 寫的定義還是不夠準確，所以我<strong>自己改寫了 Claude Code 的定義</strong>，再要求它把這次修改的邏輯寫進 CLAUDE.md，附上修改前後對照，讓之後的 AI 有例子可以照著做。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-09/before-three-topics.webp" alt="修改前的 Claude Code 頁：01 什麼是 AI Agent、02 什麼是 Vibe Coding 兩個區塊並列" loading="lazy"><figcaption>修改前：兩個「什麼是…？」並列，讀起來像不相干的事</figcaption></figure>
+        <figure class="shot"><img src="../assets/img/lesson-09/my-definition.webp" alt="我自己改寫的定義：Claude Code 是一種 AI Agent，你用自然語言描述需求，它會自己讀程式、改檔案、執行指令，把作品做出來；如果你完全不看程式碼、只憑結果和感覺跟 AI 來回調整，這種做法就叫 Vibe Coding" loading="lazy"><figcaption>我自己改寫的定義，後來直接成為 CLAUDE.md 裡的範例</figcaption></figure>
+      </li>
+      <li class="step">
+        <h3>決定⑤：為新視窗測試準備 New 標記</h3>
+        <p>我想比對「和 AI 一起調整的內容」和「AI 自己讀 CLAUDE.md 生成的內容」，所以加了 New 標記規則：AI 照規則新增的頁面、段落一律標 New，而且不能自己移除。</p>
+        <figure class="shot"><img src="../assets/img/lesson-09/new-badge-rule.webp" alt="AI 回報 New 標記機制已做好，CLAUDE.md 新增第 1.5 節，列出新作品頁、新工具頁、既有頁面補的段落和新技巧各怎麼標" loading="lazy"><figcaption>AI 把 New 標記寫成 CLAUDE.md 第 1.5 節，放在最前面，接手的 AI 一定會讀到</figcaption></figure>
+      </li>
+    </ol>
+
+    <h3>第三階段：開新視窗測試，測出缺陷就補規則</h3>
+    <ol class="steps">
+      <li class="step">
+        <h3>開一個全新的對話，只說一句「新增第 6,7,8 堂」</h3>
+        <p>照老師教的方法，我開了一個全新的對話，AI 沒看過之前的任何討論，我也不多做說明。AI 讀完 CLAUDE.md 後，自己分派三個子代理，同時做第 6、7、8 堂，也主動說明第 7、8 堂的日期是推算的。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-09/new-chat-subagents.webp" alt="新對話裡只有一句「新增第 6,7,8 堂」，AI 分派三個子代理分別製作 lesson-06、07、08 頁面，並說明第 7、8 堂日期是推算的" loading="lazy"><figcaption>新視窗裡只有一句話，AI 自己分派三個子代理同時做三頁</figcaption></figure>
+        <p>做完後，首頁多了三張作品卡片，都自動標上紅色 New。AI 也依「值得寫」標準判斷：新模型屬於同類，補進既有的工具頁，而不是另開新頁，補的段落也都標了 New。</p>
+      </li>
+      <li class="step">
+        <h3>格式都對，但 RAG 和 Tool Use 沒講清楚，所以補一條規則</h3>
+        <p>第 7 堂的重點是 RAG、第 8 堂是 Tool Use，AI 沒有把這兩個概念講清楚。它們不是同事可以下載的工具，不屬於「新手工具入門」，卻是那堂課最重要的知識。</p>
+        <p>做錯的地方，就是規則沒寫清楚。所以我請 AI 補一條規則：作業主題是技術概念時，作品頁一定要加「先搞懂」區塊，回答四件事：<strong>為什麼需要它、它怎麼運作、它的限制、一般人會在哪裡碰到它</strong>。我要求調整的地方另外標上「✎ 補充」，和 AI 自己生成的 New 分開。</p>
+        <figure class="shot narrow"><img src="../assets/img/lesson-09/concept-rag-supp.webp" alt="補上後的第 7 堂：01 先搞懂 RAG 區塊，標題旁有補充標記" loading="lazy"><figcaption>補上後的第 7 堂：「01 先搞懂 RAG」，標題旁有「✎ 補充」標記</figcaption></figure>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="result">
+    <h2><span class="num">03</span>成果</h2>
+    <p>網站目前有第 1～9 堂作品頁、5 頁新手工具入門。第 1～5 堂是我和 AI 一起做的；第 6～8 堂是開新視窗後，AI 只讀 CLAUDE.md 自己做出來的（網站上標紅色 New）。新視窗測試對照老師的檢查清單：</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>檢查項目</th><th>結果</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr class="best"><td>檔名和放的位置對嗎？</td><td>✅</td><td>lessons/lesson-06～08.html，圖片放在各自的 assets/img/lesson-NN/</td></tr>
+          <tr class="best"><td>格式跟舊的頁面一樣嗎？</td><td>✅</td><td>區塊順序和第 1～5 堂相同：30 秒看懂 → 過程 → 成果 → 心得 → 帶回工作用</td></tr>
+          <tr class="best"><td>首頁目錄有更新嗎？</td><td>✅</td><td>新卡片、技巧篩選、上一篇／下一篇都自動接上</td></tr>
+          <tr class="best"><td>有沒有動到不該動的檔案？</td><td>✅</td><td>只改了規則允許的檔案；其他堂的頁面都沒動</td></tr>
+          <tr class="best"><td>（自己加的）有沒有個資？</td><td>✅</td><td>全站搜尋姓名、學號、學校等個資，結果為零</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><b>這一頁也是這樣做出來的</b> 作業裡我寫到：以第 9 堂為例，只要開新對話說「新增第 9 堂」，CLAUDE.md 會帶著 AI 走完找資料、做頁面、接上網站、自己判斷、自己檢查的流程。你現在看的這一頁，就是 AI 依照 CLAUDE.md 做出來的，所以標題旁也有 New。</div>
+
+    <details class="fold">
+      <summary>CLAUDE.md 各節重點（共 12 節）</summary>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>規則</th><th>規定什麼</th><th>為什麼要寫</th></tr></thead>
+          <tbody>
+            <tr><td>讀者與目的（1）</td><td>讀者是零基礎的同事；每頁回答「做了什麼、怎麼和 AI 合作、帶回工作用」</td><td>讀者決定所有寫法</td></tr>
+            <tr><td>New／補充標記（1.5）</td><td>AI 照規則新增的內容一律標 New；我看過後要求改的標 ✎ 補充</td><td>分得出哪些是 AI 自己做的，方便驗收</td></tr>
+            <tr><td>內容來源（2）</td><td>只讀每堂作業資料夾裡的 eeclass 提交內容 PDF 和裡面的雲端連結，不准編造數字</td><td>本機檔案不一定是最後繳交的版本</td></tr>
+            <tr><td>個資保密（3）</td><td>姓名、學號、學校、分數、公司名稱一律不放；含金鑰的檔案不讀</td><td>網站是公開的</td></tr>
+            <tr><td>新增流程（4、5）</td><td>檔案放哪、怎麼命名；新增一堂的 10 個步驟；只能動哪些檔案</td><td>讓 AI 照步驟做，不亂改舊頁面</td></tr>
+            <tr><td>頁面結構與寫法（6、7、8）</td><td>固定區塊順序、專有名詞要加白話解釋、圖片格式</td><td>每一頁長得一樣，同事好讀</td></tr>
+            <tr><td>工具與網站長大（9、9.5、9.6）</td><td>工具標籤講白話；新工具用 5 項標準判斷「值不值得寫」；首頁只能有三區</td><td>網站變長也不會亂</td></tr>
+            <tr><td>自我檢查（11）</td><td>16 項完成前檢查清單，例如個資搜尋結果要為零</td><td>AI 交差前自己先檢查</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <h3>延伸：同一套規則，也能用在其他課程</h3>
+    <p>如果想幫其他課程（例如 Fintech、機器學習）也做一個作品集，只要改兩件事，其他規則都可以直接沿用：</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>要改的</th><th>其他直接沿用的</th></tr></thead>
+        <tbody>
+          <tr><td>① 網站是給誰看的</td><td>頁面固定結構、寫作風格、圖片規則</td></tr>
+          <tr><td>② 每堂作業的資料放在哪裡</td><td>新增一堂的 10 個步驟、個資檢查、自我檢查清單、New／補充標記</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="links">
+      <a class="btn" href="https://lcycool-ht.github.io/genai-lab/" target="_blank" rel="noopener">打開網站首頁 ↗</a>
+      <a class="btn ghost" href="https://github.com/LCYCOOL-HT/genai-lab" target="_blank" rel="noopener">GitHub Repository ↗</a>
+      <a class="btn ghost" href="https://github.com/LCYCOOL-HT/genai-lab/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md 全文 ↗</a>
+    </div>
+    <div class="callout warn"><b>提醒</b> AI 工具的功能和名稱（例如 CLAUDE.md、AGENTS.md）以作業當時的了解為準。</div>
+  </section>
+
+  <section class="block" id="reflection">
+    <h2><span class="num">04</span>我的心得</h2>
+    <div class="reflection">
+      <p>做完最大的感覺就是：真的很方便！CLAUDE.md 寫好後，就算開一個全新的對話，AI 也能很快知道這個專案在做什麼。規則和以往的作業一樣，一開始只有想法，是和 AI 一起邊做邊改才梳理完整的。遇到不如我心意的地方，像是工具清單列得太浮誇、用了同事看不懂的名詞，或是一頁塞了太多事情，我都請 AI 記進 CLAUDE.md，下次生成時它比較不會再犯一樣的錯，我也不用每次都重新講一遍。</p>
+      <p>測試時我只說了一句話，它就做出三頁風格一致的作品頁，當下覺得很神奇，完全做到了一開頭寫的目標：「讓接手的 AI 不用問任何問題，就能把新一堂作業整理成一頁，而且風格、結構和現有頁面一致」。但仔細看，產出的頁面還是有一些小問題，忍不住想要出手調整 XD。</p>
+      <p>我後來也發現，只要換一下「要給誰看」和「資料放在哪裡」，CLAUDE.md 應該也能拿來整理其他課程的作品，真是一魚多吃。如果再做一次，我會想多開幾次新對話，看看 AI 自己照著規則生成時還會出現什麼問題；多測幾次，規則應該可以寫得更好，讓 AI 生成的內容一次就達到我的滿分。</p>
+    </div>
+  </section>
+
+  <section class="block work-tips" id="work">
+    <h2>💼 帶回工作用</h2>
+    <p>這一堂可以套用到工作上的地方：</p>
+    <ol>
+      <li><b>重複交辦的工作，寫一本「員工手冊」給 AI</b>例如每週的報表摘要、每月的稽核紀錄整理，把格式、資料來源、不能動的地方寫成一份文件，每次開新對話先請 AI 讀它，不用每次重講。</li>
+      <li><b>交辦前先說清楚三件事</b>要什麼成品、怎麼算做完、有什麼限制。說不清楚的，可以先讓 AI 反問你，把答案寫進手冊。</li>
+      <li><b>AI 做錯時，不只改這一次，也把規則補進去</b>例如 AI 把內部檔名寫進對外文件，除了刪掉，也在手冊加一條「內部檔名不能出現」，下次就不會再犯。</li>
+      <li><b>用新對話測試手冊夠不夠清楚</b>開一個全新的對話，只說一句話，看 AI 能不能照手冊做對；做錯的地方，就是手冊還沒寫清楚的地方。</li>
+      <li><b>讓 AI 標出它自己新增的內容</b>像這次的 New 標記，請 AI 把它改過或新增的地方標出來，自己驗收時一眼就知道要看哪裡。</li>
+    </ol>
+  </section>
+
+  <nav class="pager" id="pager"></nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>內容整理自生成式 AI 課程的每週作業，網站由 Claude Code 依照專案裡的 CLAUDE.md 規則協助製作。</p>
+  </div>
+</footer>
+
+<script src="../assets/js/lessons.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

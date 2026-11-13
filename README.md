@@ -31,6 +31,7 @@
 | 6 | [EHS 事件報告小幫手：陪新人寫報告的對話機器人](https://lcycool-ht.github.io/genai-lab/lessons/lesson-06.html) | 指令從 2,872 字精簡到 997 字，反而 7 輪就寫完報告 |
 | 7 | [阿安主任：只根據法規條文回答的工安顧問](https://lcycool-ht.github.io/genai-lab/lessons/lesson-07.html) | 用 RAG 讓 AI 先查法規條文，再根據條文回答並標出依據 |
 | 8 | [股市資訊助手：讓 AI 自己用工具查股價](https://lcycool-ht.github.io/genai-lab/lessons/lesson-08.html) | 用 Tool Use 讓 AI 自己決定要查什麼、查幾次 |
+| 9 | [生成式 AI 作品集：用 CLAUDE.md 讓 AI 接手「每週新增一頁」](https://lcycool-ht.github.io/genai-lab/lessons/lesson-09.html) | 把規則寫進 CLAUDE.md，一句話就讓 AI 做出新的作品頁 |
 
 **不知道從哪裡看起？**
 
